@@ -51,7 +51,7 @@ FLAG_DESCRIPTIONS = {
 
 COLUMN_DESCRIPTIONS = [
     ("Pack", "Pack name (from `display_name`), linked to its GitHub repo."),
-    ("Level", "Maturity level: Experimental, Alpha, Beta, or **GA**. See [MATURITY-MODEL.md](MATURITY-MODEL.md) for definitions and promotion criteria. Sourced from `level` in pack-metadata.yaml."),
+    ("Level", "Maturity level: Experimental, Alpha, Beta, or **GA**. Definitions and promotion criteria live in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md). Sourced from `level` in pack-metadata.yaml."),
     ("Owner", "GitHub handle of the engineer accountable for the pack. From `owner` in pack-metadata.yaml."),
     ("NebariApp", "How the pack integrates with the NebariApp CRD: Full, Partial, None, or N/A. From `nebariapp_integration`."),
     ("Standalone", "Whether the pack installs without the Nebari operator. From `scope.standalone-supported`."),
