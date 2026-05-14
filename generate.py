@@ -186,6 +186,36 @@ def fetch_github_data(repo: str, token: str | None) -> dict:
         except json.JSONDecodeError:
             pass
 
+    # Fall back to git tags when no GitHub Release records exist. Some packs
+    # tag releases (v0.1.0-alpha.N) without creating Release objects, and
+    # the dashboard should still surface a recent version. We use the most
+    # recent tag from /tags (GitHub returns these in reverse-chronological
+    # tag-creation order; imperfect for semver but good enough), then a
+    # second call to /commits/{tag} to recover the tag's commit date.
+    if out["release_tag"] is None:
+        status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/tags?per_page=1", token)
+        if status == 200:
+            try:
+                tags = json.loads(body)
+                if tags and isinstance(tags, list):
+                    tag_name = tags[0].get("name")
+                    if tag_name:
+                        out["release_tag"] = tag_name
+                        ts, tb = _request_with_retry(
+                            f"{GITHUB_API}/repos/{repo}/commits/{urllib.parse.quote(tag_name, safe='')}",
+                            token,
+                        )
+                        if ts == 200:
+                            try:
+                                commit = json.loads(tb)
+                                committed = commit.get("commit", {}).get("committer", {}).get("date")
+                                if committed:
+                                    out["release_date"] = _parse_iso(committed)
+                            except json.JSONDecodeError:
+                                pass
+            except json.JSONDecodeError:
+                pass
+
     status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/commits?per_page=1", token)
     if status == 200:
         try:
