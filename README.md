@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T10:28:19Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T12:51:42Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -24,4 +24,4 @@ Pack maturity levels are defined in the [release readiness checklist](https://gi
 
 To add a pack to this dashboard, add `pack-metadata.yaml` to the pack repo and open a PR adding the repo to `tracked-packs.yaml` here. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-_Generated: 2026-05-14T10:28:19Z_
+_Generated: 2026-05-14T12:51:42Z_
