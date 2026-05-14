@@ -2,11 +2,11 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T13:20:54Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T13:38:18Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 0 Beta · 1 Alpha · 0 Experimental · 0 Deprecated
+- 0 GA · 1 Beta · 1 Alpha · 0 Experimental · 0 Deprecated
 - 13 packs flagged · breakdown: metadata-missing: 13, repo-not-found: 3
 
 ## Packs
@@ -27,6 +27,7 @@ _Last regenerated: 2026-05-14T13:20:54Z. Trigger a refresh via the `Refresh pack
 | [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | – | – | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 07 | 🆘 metadata-missing | – |
 | [nebari-provenance-collector-pack](https://github.com/nebari-dev/nebari-provenance-collector-pack) | – | – | N/A | – | v0.1.0-alpha.4 (May 14) | May 14 | 🆘 metadata-missing | – |
 | [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | – | – | N/A | – | – | Apr 15 | 🆘 metadata-missing | – |
+| [skillsctl](https://github.com/nebari-dev/skillsctl) | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 14 | – | – |
 
 ## Column reference
 
@@ -53,6 +54,11 @@ _Last regenerated: 2026-05-14T13:20:54Z. Trigger a refresh via the `Refresh pack
 
 Each row is built from two sources: a `pack-metadata.yaml` file at the root of each pack repo (edited by the pack's owner) and a small set of GitHub API fields (latest release, last commit, open issues).
 
-To add a pack to this dashboard, add `pack-metadata.yaml` to the pack repo and open a PR adding the repo to `tracked-packs.yaml` here. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+To add a pack to this dashboard:
 
-_Generated: 2026-05-14T13:20:54Z_
+1. Copy [`schema/pack-metadata.example.yaml`](schema/pack-metadata.example.yaml) into your pack repo as `pack-metadata.yaml`, fill in the required fields, and merge to your default branch.
+2. Open a PR against this repo adding your pack to [`tracked-packs.yaml`](tracked-packs.yaml).
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
+
+_Generated: 2026-05-14T13:38:18Z_
