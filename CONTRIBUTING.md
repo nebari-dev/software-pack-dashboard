@@ -88,7 +88,8 @@ You're in the wrong place. Go look at [`README.md`](README.md). The whole point 
 
 ## Reference
 
-- Maturity levels: [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md)
+- Maturity model and promotion criteria: [`MATURITY-MODEL.md`](MATURITY-MODEL.md)
+- Detailed GA release checklist: [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md)
 - Schema: [`schema/pack-metadata.schema.json`](schema/pack-metadata.schema.json)
 - Annotated example: [`schema/pack-metadata.example.yaml`](schema/pack-metadata.example.yaml)
 - Registry of tracked packs: [`tracked-packs.yaml`](tracked-packs.yaml)
