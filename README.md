@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T13:51:19Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T14:13:36Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -32,7 +32,7 @@ _Last regenerated: 2026-05-14T13:51:19Z. Trigger a refresh via the `Refresh pack
 ## Column reference
 
 - **Pack** - Pack name (from `display_name`), linked to its GitHub repo.
-- **Level** - Maturity level: Experimental, Alpha, Beta, or **GA**. See [MATURITY-MODEL.md](MATURITY-MODEL.md) for definitions and promotion criteria. Sourced from `level` in pack-metadata.yaml.
+- **Level** - Maturity level: Experimental, Alpha, Beta, or **GA**. Definitions and promotion criteria live in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md). Sourced from `level` in pack-metadata.yaml.
 - **Owner** - GitHub handle of the engineer accountable for the pack. From `owner` in pack-metadata.yaml.
 - **NebariApp** - How the pack integrates with the NebariApp CRD: Full, Partial, None, or N/A. From `nebariapp_integration`.
 - **Standalone** - Whether the pack installs without the Nebari operator. From `scope.standalone-supported`.
@@ -61,4 +61,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-05-14T13:51:19Z_
+_Generated: 2026-05-14T14:13:36Z_
