@@ -2,19 +2,19 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T12:51:42Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T12:59:56Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 0 Beta · 0 Alpha · 0 Experimental · 0 Deprecated
-- 2 packs flagged · breakdown: metadata-missing: 2
+- 0 GA · 0 Beta · 1 Alpha · 0 Experimental · 0 Deprecated
+- 2 packs flagged · breakdown: demo-lapsed: 1, metadata-missing: 1
 
 ## Packs
 
 | Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Last demo | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | – | 🆘 metadata-missing | – |
-| [nebari-llm-serving-pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | – | – | N/A | – | – | Apr 29 | – | 🆘 metadata-missing | – |
+| [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | – | May 14 | – | ⚠️ demo-lapsed | – |
 
 ## How this dashboard works
 
@@ -24,4 +24,4 @@ Pack maturity levels are defined in the [release readiness checklist](https://gi
 
 To add a pack to this dashboard, add `pack-metadata.yaml` to the pack repo and open a PR adding the repo to `tracked-packs.yaml` here. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-_Generated: 2026-05-14T12:51:42Z_
+_Generated: 2026-05-14T12:59:56Z_
