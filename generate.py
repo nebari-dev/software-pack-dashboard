@@ -169,14 +169,20 @@ def fetch_github_data(repo: str, token: str | None) -> dict:
         except json.JSONDecodeError:
             pass
 
-    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/releases/latest", token)
+    # Use /releases?per_page=1 instead of /releases/latest so prereleases
+    # are included. /releases/latest skips prereleases and drafts, which 404s
+    # for packs whose only releases so far are alphas/betas.
+    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/releases?per_page=1", token)
     if status == 200:
         try:
-            rel = json.loads(body)
-            out["release_tag"] = rel.get("tag_name")
-            published = rel.get("published_at")
-            if published:
-                out["release_date"] = _parse_iso(published)
+            releases = json.loads(body)
+            if releases and isinstance(releases, list):
+                rel = releases[0]
+                if not rel.get("draft"):
+                    out["release_tag"] = rel.get("tag_name")
+                    published = rel.get("published_at")
+                    if published:
+                        out["release_date"] = _parse_iso(published)
         except json.JSONDecodeError:
             pass
 
