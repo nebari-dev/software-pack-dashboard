@@ -305,7 +305,7 @@ def validate_metadata(data: dict, expected_name: str) -> list[str]:
         if po is None or (isinstance(po, str) and not po.strip()):
             errors.append("level: ga requires non-null product_owner")
 
-    for df in ("sunset_date", "last_promoted_at", "last_presales_demo"):
+    for df in ("sunset_date", "last_promoted_at"):
         v = data.get(df)
         if v is not None and _parse_iso(str(v)) is None:
             errors.append(f"{df} '{v}' is not a valid ISO date (YYYY-MM-DD)")
