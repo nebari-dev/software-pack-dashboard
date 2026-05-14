@@ -2,26 +2,45 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T13:02:13Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T13:11:25Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
 - 0 GA · 0 Beta · 1 Alpha · 0 Experimental · 0 Deprecated
-- 2 packs flagged · breakdown: demo-lapsed: 1, metadata-missing: 1
+- 1 packs flagged · breakdown: metadata-missing: 1
 
 ## Packs
 
-| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Last demo | Flags | Notes |
-|---|---|---|---|---|---|---|---|---|---|
-| [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | – | 🆘 metadata-missing | – |
-| [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | ⚠️ demo-lapsed | – |
+| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
+|---|---|---|---|---|---|---|---|---|
+| [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | 🆘 metadata-missing | – |
+| [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | – |
+
+## Column reference
+
+- **Pack** - Pack name (from `display_name`), linked to its GitHub repo.
+- **Level** - Maturity level: Experimental, Alpha, Beta, or **GA**. Defined in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md). Sourced from `level` in pack-metadata.yaml.
+- **Owner** - GitHub handle of the engineer accountable for the pack. From `owner` in pack-metadata.yaml.
+- **NebariApp** - How the pack integrates with the NebariApp CRD: Full, Partial, None, or N/A. From `nebariapp_integration`.
+- **Standalone** - Whether the pack installs without the Nebari operator. From `scope.standalone-supported`.
+- **Last release** - Most recent published release tag (including prereleases). Falls back to the latest git tag if no GitHub Release records exist. Sourced from the GitHub API.
+- **Last commit** - Date of the most recent commit on the default branch. Sourced from the GitHub API.
+- **Flags** - Auto-computed status flags. See the Flag reference below.
+- **Notes** - Free-form `demo_notes` from pack-metadata.yaml (truncated at 100 chars). For packs with validation errors, the error message appears here instead.
+
+## Flag reference
+
+- 🆘 metadata-missing - Pack repo has no `pack-metadata.yaml` file. Pack-author fields show `–`.
+- ⚠️ metadata-invalid - `pack-metadata.yaml` exists but failed validation. The specific error appears in the Notes column.
+- 🆘 repo-not-found - Pack repo could not be reached. Check the `tracked-packs.yaml` entry.
+- ⚠️ stale - Default branch has had no commits in the last 90 days.
+- ⚠️ no-product-owner - Pack is GA but `product_owner` is null in its metadata.
+- 🚫 deprecated - Pack is marked `deprecated: true`. See the Deprecated packs table for sunset details.
 
 ## How this dashboard works
 
 Each row is built from two sources: a `pack-metadata.yaml` file at the root of each pack repo (edited by the pack's owner) and a small set of GitHub API fields (latest release, last commit, open issues).
 
-Pack maturity levels are defined in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md).
-
 To add a pack to this dashboard, add `pack-metadata.yaml` to the pack repo and open a PR adding the repo to `tracked-packs.yaml` here. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-_Generated: 2026-05-14T13:02:13Z_
+_Generated: 2026-05-14T13:11:25Z_
