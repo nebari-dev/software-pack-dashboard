@@ -2,36 +2,37 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T15:13:21Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T15:09:07Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 1 Beta · 1 Alpha · 1 Experimental · 0 Deprecated
-- 12 packs flagged · breakdown: metadata-missing: 12, repo-not-found: 3
+- 0 GA · 1 Beta · 1 Alpha · 0 Experimental · 0 Deprecated
+- 13 packs flagged · breakdown: metadata-missing: 13
 
 ## Packs
 
-| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
-|---|---|---|---|---|---|---|---|---|
-| [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | 🆘 metadata-missing | – |
-| [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | – |
-| [nebari-chat-pack](https://github.com/nebari-dev/nebari-chat-pack) | – | – | N/A | – | v0.0.8 (May 13) | May 13 | 🆘 metadata-missing | – |
-| [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) | – | – | N/A | – | nebari-nebi-pack-0.1.0-alpha.4 (Apr 13) | Apr 17 | 🆘 metadata-missing | – |
-| [nebari-capability-pack](https://github.com/nebari-dev/nebari-capability-pack) | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) | – | – | N/A | – | nebari-lgtm-pack-0.1.0-alpha.6 (Mar 23) | Mar 31 | 🆘 metadata-missing | – |
-| [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) | – | – | N/A | – | v0.3.1 (Apr 09) | Apr 09 | 🆘 metadata-missing | – |
-| [Rayserve Pack](https://github.com/nebari-dev/nebari-rayserve-pack) | Experimental | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | nebari-rayserve-pack-0.3.0 (May 01) | May 14 | – | – |
-| [nebari-mlflow-pack](https://github.com/nebari-dev/nebari-mlflow-pack) | – | – | N/A | – | nebari-mlflow-pack-1.0.0 (Apr 09) | Apr 15 | 🆘 metadata-missing | – |
-| [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [nebari-external-auth-pack](https://github.com/nebari-dev/nebari-external-auth-pack) | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | – | – | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 07 | 🆘 metadata-missing | – |
-| [nebari-provenance-collector-pack](https://github.com/nebari-dev/nebari-provenance-collector-pack) | – | – | N/A | – | v0.1.0-alpha.4 (May 14) | May 14 | 🆘 metadata-missing | – |
-| [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | – | – | N/A | – | – | Apr 15 | 🆘 metadata-missing | – |
-| [skillsctl](https://github.com/nebari-dev/skillsctl) | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 14 | – | – |
+| Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
+|---|---|---|---|---|---|---|---|---|---|
+| [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | 🆘 metadata-missing | – |
+| [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | – |
+| [nebari-chat-pack](https://github.com/nebari-dev/nebari-chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | – | – | N/A | – | v0.0.8 (May 13) | May 13 | 🆘 metadata-missing | – |
+| [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) | Nebi deployment pack for Nebari | – | – | N/A | – | nebari-nebi-pack-0.1.0-alpha.4 (Apr 13) | Apr 17 | 🆘 metadata-missing | – |
+| [nebari-capability-pack](https://github.com/nebari-dev/nebari-capability-pack) | Nebari software pack for deploying pixi-backed Python capabilities on Kubernetes. | – | – | N/A | – | – | May 06 | 🆘 metadata-missing | – |
+| [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | – | – | N/A | – | nebari-lgtm-pack-0.1.0-alpha.6 (Mar 23) | Mar 31 | 🆘 metadata-missing | – |
+| [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | – | – | N/A | – | v0.3.1 (Apr 09) | Apr 09 | 🆘 metadata-missing | – |
+| [nebari-rayserve-pack](https://github.com/nebari-dev/nebari-rayserve-pack) | A Nebari software pack that deploys Ray Serve on Kubernetes via the RayService CRD, with optional routing, TLS, and OIDC authentication through the nebari-operator. | – | – | N/A | – | nebari-rayserve-pack-0.3.0 (May 01) | May 01 | 🆘 metadata-missing | – |
+| [nebari-mlflow-pack](https://github.com/nebari-dev/nebari-mlflow-pack) | A Nebari software pack that deploys MLflow with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | – | – | N/A | – | nebari-mlflow-pack-1.0.0 (Apr 09) | Apr 15 | 🆘 metadata-missing | – |
+| [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | Nebari software pack for data-engineering workloads (work in progress; scaffolded from the pack template). | – | – | N/A | – | – | Apr 27 | 🆘 metadata-missing | – |
+| [nebari-external-auth-pack](https://github.com/nebari-dev/nebari-external-auth-pack) | Nebari software pack for connecting external accounts and delivering credentials into Nebari-launched environments (notebooks, IDEs,   apps, and services), enabling secure integrations with git providers like GitHub and other third-party platforms and applications. | – | – | N/A | – | – | Apr 23 | 🆘 metadata-missing | – |
+| [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | – | – | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 07 | 🆘 metadata-missing | – |
+| [nebari-provenance-collector-pack](https://github.com/nebari-dev/nebari-provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | – | – | N/A | – | v0.1.0-alpha.4 (May 14) | May 14 | 🆘 metadata-missing | – |
+| [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | – | – | N/A | – | – | Apr 15 | 🆘 metadata-missing | – |
+| [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 14 | – | – |
 
 ## Column reference
 
 - **Pack** - Pack name (from `display_name`), linked to its GitHub repo.
+- **Description** - One-line summary of what the pack does. Sourced from the GitHub repo description (set via repo settings or `gh repo edit -d`).
 - **Level** - Maturity level: Experimental, Alpha, Beta, or **GA**. Definitions and promotion criteria live in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md). Sourced from `level` in pack-metadata.yaml.
 - **Owner** - GitHub handle of the engineer accountable for the pack. From `owner` in pack-metadata.yaml.
 - **NebariApp** - How the pack integrates with the NebariApp CRD: Full, Partial, None, or N/A. From `nebariapp_integration`.
@@ -61,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-05-14T15:13:21Z_
+_Generated: 2026-05-14T15:09:07Z_

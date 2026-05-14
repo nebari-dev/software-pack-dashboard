@@ -51,6 +51,7 @@ FLAG_DESCRIPTIONS = {
 
 COLUMN_DESCRIPTIONS = [
     ("Pack", "Pack name (from `display_name`), linked to its GitHub repo."),
+    ("Description", "One-line summary of what the pack does. Sourced from the GitHub repo description (set via repo settings or `gh repo edit -d`)."),
     ("Level", "Maturity level: Experimental, Alpha, Beta, or **GA**. Definitions and promotion criteria live in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md). Sourced from `level` in pack-metadata.yaml."),
     ("Owner", "GitHub handle of the engineer accountable for the pack. From `owner` in pack-metadata.yaml."),
     ("NebariApp", "How the pack integrates with the NebariApp CRD: Full, Partial, None, or N/A. From `nebariapp_integration`."),
@@ -174,6 +175,7 @@ def fetch_github_data(repo: str, token: str | None) -> dict:
         "release_date": None,
         "last_commit_date": None,
         "open_issues_count": None,
+        "description": None,
         "repo_not_found": False,
     }
 
@@ -185,6 +187,9 @@ def fetch_github_data(repo: str, token: str | None) -> dict:
         try:
             repo_info = json.loads(body)
             out["open_issues_count"] = repo_info.get("open_issues_count")
+            desc = repo_info.get("description")
+            if isinstance(desc, str) and desc.strip():
+                out["description"] = desc.strip()
         except json.JSONDecodeError:
             pass
 
@@ -428,6 +433,12 @@ def render_row(row: PackRow) -> str:
     display = md.get("display_name") or row.repo.split("/")[-1]
     pack_cell = f"[{display}](https://github.com/{row.repo})"
 
+    desc = gh.get("description")
+    if isinstance(desc, str) and desc.strip():
+        description_cell = desc.replace("|", "\\|").replace("\n", " ")
+    else:
+        description_cell = "–"
+
     level_cell = _level_label(md.get("level"))
     owner = md.get("owner")
     owner_cell = _user_link(owner) if isinstance(owner, str) and owner else "–"
@@ -452,7 +463,7 @@ def render_row(row: PackRow) -> str:
     notes_cell = notes_cell.replace("|", "\\|").replace("\n", " ")
 
     return (
-        f"| {pack_cell} | {level_cell} | {owner_cell} | {nai_cell} | {standalone_cell} "
+        f"| {pack_cell} | {description_cell} | {level_cell} | {owner_cell} | {nai_cell} | {standalone_cell} "
         f"| {release_cell} | {commit_cell} | {flags_cell} | {notes_cell} |"
     )
 
@@ -511,8 +522,8 @@ def render_dashboard(rows: list[PackRow], generated_at: datetime, workflow_url: 
     lines.append("")
     lines.append("## Packs")
     lines.append("")
-    lines.append("| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |")
-    lines.append("|---|---|---|---|---|---|---|---|---|")
+    lines.append("| Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |")
+    lines.append("|---|---|---|---|---|---|---|---|---|---|")
     for r in active:
         lines.append(render_row(r))
     lines.append("")

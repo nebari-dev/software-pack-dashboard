@@ -207,11 +207,13 @@ def test_render_row_full():
             "release_tag": "v0.5.2",
             "release_date": date(2026, 4, 12),
             "last_commit_date": date(2026, 4, 28),
+            "description": "A Helm chart that deploys JupyterHub and jhub-apps.",
         },
         flags=[],
     )
     expected = (
         "| [Data Science Pack](https://github.com/nebari-dev/nebari-data-science-pack) "
+        "| A Helm chart that deploys JupyterHub and jhub-apps. "
         "| Alpha "
         "| [@chuckmcandrew](https://github.com/chuckmcandrew) "
         "| Partial | Yes "
