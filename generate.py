@@ -30,17 +30,36 @@ LEVELS = ("experimental", "alpha", "beta", "ga")
 NEBARIAPP_VALUES = ("none", "partial", "full", "na")
 
 STALE_DAYS = 90
-DEMO_LAPSED_DAYS = 60
 
 FLAG_DISPLAY = {
     "metadata-missing": "🆘 metadata-missing",
     "metadata-invalid": "⚠️ metadata-invalid",
     "repo-not-found": "🆘 repo-not-found",
     "stale": "⚠️ stale",
-    "demo-lapsed": "⚠️ demo-lapsed",
     "no-product-owner": "⚠️ no-product-owner",
     "deprecated": "🚫 deprecated",
 }
+
+FLAG_DESCRIPTIONS = {
+    "metadata-missing": "Pack repo has no `pack-metadata.yaml` file. Pack-author fields show `–`.",
+    "metadata-invalid": "`pack-metadata.yaml` exists but failed validation. The specific error appears in the Notes column.",
+    "repo-not-found": "Pack repo could not be reached. Check the `tracked-packs.yaml` entry.",
+    "stale": f"Default branch has had no commits in the last {STALE_DAYS} days.",
+    "no-product-owner": "Pack is GA but `product_owner` is null in its metadata.",
+    "deprecated": "Pack is marked `deprecated: true`. See the Deprecated packs table for sunset details.",
+}
+
+COLUMN_DESCRIPTIONS = [
+    ("Pack", "Pack name (from `display_name`), linked to its GitHub repo."),
+    ("Level", "Maturity level: Experimental, Alpha, Beta, or **GA**. Defined in the [release readiness checklist](https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md). Sourced from `level` in pack-metadata.yaml."),
+    ("Owner", "GitHub handle of the engineer accountable for the pack. From `owner` in pack-metadata.yaml."),
+    ("NebariApp", "How the pack integrates with the NebariApp CRD: Full, Partial, None, or N/A. From `nebariapp_integration`."),
+    ("Standalone", "Whether the pack installs without the Nebari operator. From `scope.standalone-supported`."),
+    ("Last release", "Most recent published release tag (including prereleases). Falls back to the latest git tag if no GitHub Release records exist. Sourced from the GitHub API."),
+    ("Last commit", "Date of the most recent commit on the default branch. Sourced from the GitHub API."),
+    ("Flags", "Auto-computed status flags. See the Flag reference below."),
+    ("Notes", "Free-form `demo_notes` from pack-metadata.yaml (truncated at 100 chars). For packs with validation errors, the error message appears here instead."),
+]
 
 
 # ---------------------------------------------------------------------------
@@ -345,12 +364,6 @@ def compute_flags(
             flags.append("stale")
 
     level = md.get("level")
-    if level in ("alpha", "beta", "ga") and not deprecated:
-        demo = md.get("last_presales_demo")
-        demo_date = _parse_iso(str(demo)) if demo else None
-        if demo_date is None or (today - demo_date).days > DEMO_LAPSED_DAYS:
-            flags.append("demo-lapsed")
-
     if level == "ga" and md.get("product_owner") in (None, ""):
         flags.append("no-product-owner")
 
@@ -427,16 +440,6 @@ def render_row(row: PackRow) -> str:
 
     commit_cell = _fmt_date(gh.get("last_commit_date"))
 
-    demo_raw = md.get("last_presales_demo")
-    demo_by = md.get("last_presales_demo_by")
-    demo_date = _parse_iso(str(demo_raw)) if demo_raw else None
-    if demo_date and isinstance(demo_by, str) and demo_by:
-        demo_cell = f"{_fmt_date(demo_date)} by {_user_link(demo_by)}"
-    elif demo_date:
-        demo_cell = _fmt_date(demo_date)
-    else:
-        demo_cell = "–"
-
     flags_cell = " ".join(FLAG_DISPLAY.get(f, f) for f in row.flags) if row.flags else "–"
 
     notes = md.get("demo_notes")
@@ -450,7 +453,7 @@ def render_row(row: PackRow) -> str:
 
     return (
         f"| {pack_cell} | {level_cell} | {owner_cell} | {nai_cell} | {standalone_cell} "
-        f"| {release_cell} | {commit_cell} | {demo_cell} | {flags_cell} | {notes_cell} |"
+        f"| {release_cell} | {commit_cell} | {flags_cell} | {notes_cell} |"
     )
 
 
@@ -508,8 +511,8 @@ def render_dashboard(rows: list[PackRow], generated_at: datetime, workflow_url: 
     lines.append("")
     lines.append("## Packs")
     lines.append("")
-    lines.append("| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Last demo | Flags | Notes |")
-    lines.append("|---|---|---|---|---|---|---|---|---|---|")
+    lines.append("| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |")
+    lines.append("|---|---|---|---|---|---|---|---|---|")
     for r in active:
         lines.append(render_row(r))
     lines.append("")
@@ -523,18 +526,22 @@ def render_dashboard(rows: list[PackRow], generated_at: datetime, workflow_url: 
             lines.append(render_deprecated_row(r))
         lines.append("")
 
+    lines.append("## Column reference")
+    lines.append("")
+    for name, desc in COLUMN_DESCRIPTIONS:
+        lines.append(f"- **{name}** - {desc}")
+    lines.append("")
+    lines.append("## Flag reference")
+    lines.append("")
+    for flag, display in FLAG_DISPLAY.items():
+        lines.append(f"- {display} - {FLAG_DESCRIPTIONS[flag]}")
+    lines.append("")
     lines.append("## How this dashboard works")
     lines.append("")
     lines.append(
         "Each row is built from two sources: a `pack-metadata.yaml` file at the "
         "root of each pack repo (edited by the pack's owner) and a small set of "
         "GitHub API fields (latest release, last commit, open issues)."
-    )
-    lines.append("")
-    lines.append(
-        "Pack maturity levels are defined in the "
-        "[release readiness checklist]"
-        "(https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md)."
     )
     lines.append("")
     lines.append(

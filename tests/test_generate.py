@@ -113,21 +113,14 @@ TODAY = date(2026, 5, 14)
             [],
             {"deprecated"},
         ),
-        # demo-lapsed: alpha with no demo
+        # Alpha with no demo metadata: clean (demo-lapsed flag was removed)
         (
             {"level": "alpha", "deprecated": False},
             {"last_commit_date": date(2026, 5, 1)},
             [],
-            {"demo-lapsed"},
+            set(),
         ),
-        # demo-lapsed: beta with old demo
-        (
-            {"level": "beta", "deprecated": False, "last_presales_demo": "2026-01-01"},
-            {"last_commit_date": date(2026, 5, 1)},
-            [],
-            {"demo-lapsed"},
-        ),
-        # No demo-lapsed for experimental
+        # Experimental: clean
         (
             {"level": "experimental", "deprecated": False},
             {"last_commit_date": date(2026, 5, 1)},
@@ -223,7 +216,6 @@ def test_render_row_full():
         "| [@chuckmcandrew](https://github.com/chuckmcandrew) "
         "| Partial | Yes "
         "| v0.5.2 (Apr 12) | Apr 28 "
-        "| May 01 by [@jdoe](https://github.com/jdoe) "
         "| – "
         "| Use the small-instance profile for demos. |"
     )
