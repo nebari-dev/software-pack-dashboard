@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T13:11:25Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T13:12:58Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -43,4 +43,4 @@ Each row is built from two sources: a `pack-metadata.yaml` file at the root of e
 
 To add a pack to this dashboard, add `pack-metadata.yaml` to the pack repo and open a PR adding the repo to `tracked-packs.yaml` here. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-_Generated: 2026-05-14T13:11:25Z_
+_Generated: 2026-05-14T13:12:58Z_
