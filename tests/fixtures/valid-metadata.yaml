@@ -1,0 +1,17 @@
+name: nebari-data-science-pack
+display_name: Data Science Pack
+description: JupyterHub with jhub-apps for interactive data science workloads
+level: alpha
+owner: chuckmcandrew
+deprecated: false
+product_owner: null
+nebariapp_integration: partial
+scope:
+  standalone-supported: yes
+last_promoted_at: 2026-04-15
+last_promoted_pr: 42
+last_presales_demo: 2026-05-01
+last_presales_demo_by: jdoe
+demo_notes: "Use the small-instance profile for demos."
+links:
+  docs: https://nebari.dev/docs/packs/data-science

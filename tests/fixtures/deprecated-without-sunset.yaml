@@ -1,0 +1,6 @@
+name: nebari-data-science-pack
+display_name: Data Science Pack
+description: A pack
+level: beta
+owner: chuckmcandrew
+deprecated: true

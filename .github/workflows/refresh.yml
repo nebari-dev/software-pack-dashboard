@@ -1,0 +1,40 @@
+name: Refresh pack dashboard
+
+on:
+  schedule:
+    - cron: '0 3 * * *'      # 03:00 UTC daily
+  workflow_dispatch: {}      # manual trigger
+  push:
+    branches: [main]
+    paths:
+      - 'generate.py'
+      - 'tracked-packs.yaml'
+      - 'schema/**'
+      - '.github/workflows/refresh.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+      - run: python generate.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit if changed
+        run: |
+          if git diff --quiet README.md; then
+            echo "No changes."
+          else
+            git config user.name "pack-dashboard-bot"
+            git config user.email "[email protected]"
+            git add README.md
+            git commit -m "chore: refresh dashboard ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
+            git push
+          fi

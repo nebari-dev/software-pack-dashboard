@@ -1,0 +1,7 @@
+# tracked-packs.yaml
+# Adding a pack to this list is the formal moment of admitting it as a
+# first-party tracked pack. Removing means it no longer appears on the
+# dashboard. Both operations require a PR to this repo.
+packs:
+  - repo: nebari-dev/nebari-data-science-pack
+  - repo: nebari-dev/nebari-llm-serving-pack

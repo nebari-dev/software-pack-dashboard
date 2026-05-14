@@ -1,0 +1,600 @@
+#!/usr/bin/env python3
+"""Generate the Nebari pack dashboard.
+
+Reads tracked-packs.yaml, fetches each pack's pack-metadata.yaml and a
+small set of GitHub API fields, and renders dashboard markdown to
+README.md (or stdout under --dry-run).
+"""
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+from dataclasses import dataclass, field
+from datetime import date, datetime, timezone
+from typing import Any
+
+import yaml
+
+
+GITHUB_API = "https://api.github.com"
+RAW_BASE = "https://raw.githubusercontent.com"
+USER_AGENT = "nebari-pack-dashboard/1.0"
+
+LEVELS = ("experimental", "alpha", "beta", "ga")
+NEBARIAPP_VALUES = ("none", "partial", "full", "na")
+
+STALE_DAYS = 90
+DEMO_LAPSED_DAYS = 60
+
+FLAG_DISPLAY = {
+    "metadata-missing": "🆘 metadata-missing",
+    "metadata-invalid": "⚠️ metadata-invalid",
+    "repo-not-found": "🆘 repo-not-found",
+    "stale": "⚠️ stale",
+    "demo-lapsed": "⚠️ demo-lapsed",
+    "no-product-owner": "⚠️ no-product-owner",
+    "deprecated": "🚫 deprecated",
+}
+
+
+# ---------------------------------------------------------------------------
+# Data classes
+# ---------------------------------------------------------------------------
+
+
+@dataclass
+class PackRow:
+    repo: str
+    metadata: dict | None = None
+    metadata_errors: list[str] = field(default_factory=list)
+    github_data: dict = field(default_factory=dict)
+    flags: list[str] = field(default_factory=list)
+    repo_not_found: bool = False
+
+
+# ---------------------------------------------------------------------------
+# Loading & HTTP
+# ---------------------------------------------------------------------------
+
+
+def load_tracked_packs(path: str) -> list[dict]:
+    with open(path, encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    if not isinstance(data, dict) or "packs" not in data:
+        raise ValueError(f"{path}: missing top-level 'packs' key")
+    packs = data["packs"]
+    if not isinstance(packs, list) or not packs:
+        raise ValueError(f"{path}: 'packs' must be a non-empty list")
+    for entry in packs:
+        if not isinstance(entry, dict) or "repo" not in entry:
+            raise ValueError(f"{path}: every pack entry must have a 'repo' field")
+        if "/" not in entry["repo"]:
+            raise ValueError(f"{path}: repo '{entry['repo']}' must be owner/name")
+    return packs
+
+
+def _request(url: str, token: str | None, accept: str = "application/vnd.github+json") -> tuple[int, bytes]:
+    """Single HTTP GET. Returns (status, body). Does not raise on HTTP errors."""
+    req = urllib.request.Request(url)
+    req.add_header("User-Agent", USER_AGENT)
+    req.add_header("Accept", accept)
+    req.add_header("X-GitHub-Api-Version", "2022-11-28")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return resp.status, resp.read()
+    except urllib.error.HTTPError as e:
+        return e.code, e.read() if e.fp else b""
+
+
+def _request_with_retry(url: str, token: str | None, accept: str = "application/vnd.github+json") -> tuple[int, bytes]:
+    """Retry once on 5xx or network failure with 2s backoff."""
+    try:
+        status, body = _request(url, token, accept)
+    except urllib.error.URLError as e:
+        print(f"WARN: network error for {url}: {e}; retrying once", file=sys.stderr)
+        time.sleep(2)
+        try:
+            return _request(url, token, accept)
+        except urllib.error.URLError as e2:
+            print(f"ERROR: network error for {url} (retry failed): {e2}", file=sys.stderr)
+            return 0, b""
+
+    if 500 <= status < 600:
+        print(f"WARN: {status} for {url}; retrying once", file=sys.stderr)
+        time.sleep(2)
+        try:
+            return _request(url, token, accept)
+        except urllib.error.URLError as e:
+            print(f"ERROR: network error for {url} (retry failed): {e}", file=sys.stderr)
+            return 0, b""
+
+    if status == 403:
+        # Rate limit detection
+        print(f"ERROR: 403 for {url} (rate limit?)", file=sys.stderr)
+    return status, body
+
+
+def fetch_metadata(repo: str, token: str | None) -> tuple[dict | None, list[str]]:
+    """Fetch pack-metadata.yaml. Returns (data | None, errors).
+
+    errors is a list of error message strings. If the file is missing,
+    the single error 'metadata-missing' is returned. If the file is
+    present but malformed, returns (None, [parse error]).
+    """
+    url = f"{RAW_BASE}/{repo}/HEAD/pack-metadata.yaml"
+    status, body = _request_with_retry(url, token, accept="*/*")
+    if status == 404:
+        return None, ["metadata-missing"]
+    if status == 0 or status >= 400:
+        return None, [f"fetch failed: HTTP {status}"]
+    try:
+        data = yaml.safe_load(body.decode("utf-8"))
+    except yaml.YAMLError as e:
+        return None, [f"YAML parse error: {e}"]
+    if not isinstance(data, dict):
+        return None, ["pack-metadata.yaml is not a YAML mapping"]
+    return data, []
+
+
+def fetch_github_data(repo: str, token: str | None) -> dict:
+    """Fetch latest release, last commit date, open issue count.
+
+    Returns dict with keys: release_tag, release_date, last_commit_date,
+    open_issues_count, repo_not_found. Missing values are None.
+    """
+    out: dict[str, Any] = {
+        "release_tag": None,
+        "release_date": None,
+        "last_commit_date": None,
+        "open_issues_count": None,
+        "repo_not_found": False,
+    }
+
+    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}", token)
+    if status == 404:
+        out["repo_not_found"] = True
+        return out
+    if status == 200:
+        try:
+            repo_info = json.loads(body)
+            out["open_issues_count"] = repo_info.get("open_issues_count")
+        except json.JSONDecodeError:
+            pass
+
+    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/releases/latest", token)
+    if status == 200:
+        try:
+            rel = json.loads(body)
+            out["release_tag"] = rel.get("tag_name")
+            published = rel.get("published_at")
+            if published:
+                out["release_date"] = _parse_iso(published)
+        except json.JSONDecodeError:
+            pass
+
+    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/commits?per_page=1", token)
+    if status == 200:
+        try:
+            commits = json.loads(body)
+            if commits and isinstance(commits, list):
+                committed = commits[0].get("commit", {}).get("committer", {}).get("date")
+                if committed:
+                    out["last_commit_date"] = _parse_iso(committed)
+        except json.JSONDecodeError:
+            pass
+
+    return out
+
+
+def _parse_iso(s: str) -> date | None:
+    """Parse YYYY-MM-DD or full ISO 8601 timestamp into a date."""
+    if not s:
+        return None
+    try:
+        if "T" in s:
+            return datetime.fromisoformat(s.replace("Z", "+00:00")).date()
+        return date.fromisoformat(s)
+    except (ValueError, TypeError):
+        return None
+
+
+# ---------------------------------------------------------------------------
+# Validation
+# ---------------------------------------------------------------------------
+
+
+def validate_metadata(data: dict, expected_name: str) -> list[str]:
+    """Run validation rules from §4.4. Returns list of error strings."""
+    errors: list[str] = []
+    required = ("name", "display_name", "description", "level", "owner", "deprecated")
+
+    for field_name in required:
+        if field_name not in data:
+            errors.append(f"missing required field: {field_name}")
+            continue
+        val = data[field_name]
+        if field_name == "deprecated":
+            if not isinstance(val, bool):
+                errors.append("deprecated must be a boolean")
+        elif val is None or (isinstance(val, str) and not val.strip()):
+            errors.append(f"{field_name} must be non-empty")
+
+    if data.get("name") and data["name"] != expected_name:
+        errors.append(f"name '{data['name']}' does not match repo name '{expected_name}'")
+
+    level = data.get("level")
+    if level is not None and level not in LEVELS:
+        errors.append(f"level must be one of {LEVELS}, got '{level}'")
+
+    nai = data.get("nebariapp_integration")
+    if nai is not None and nai not in NEBARIAPP_VALUES:
+        errors.append(f"nebariapp_integration must be one of {NEBARIAPP_VALUES}, got '{nai}'")
+
+    if data.get("deprecated") is True:
+        sunset = data.get("sunset_date")
+        if not sunset:
+            errors.append("deprecated: true requires sunset_date")
+        elif _parse_iso(str(sunset)) is None:
+            errors.append(f"sunset_date '{sunset}' is not a valid ISO date")
+
+    if level == "ga":
+        po = data.get("product_owner")
+        if po is None or (isinstance(po, str) and not po.strip()):
+            errors.append("level: ga requires non-null product_owner")
+
+    for df in ("sunset_date", "last_promoted_at", "last_presales_demo"):
+        v = data.get(df)
+        if v is not None and _parse_iso(str(v)) is None:
+            errors.append(f"{df} '{v}' is not a valid ISO date (YYYY-MM-DD)")
+
+    desc = data.get("description")
+    if isinstance(desc, str) and len(desc) > 200:
+        errors.append(f"description exceeds 200 chars ({len(desc)})")
+
+    notes = data.get("demo_notes")
+    if isinstance(notes, str) and len(notes) > 500:
+        errors.append(f"demo_notes exceeds 500 chars ({len(notes)})")
+
+    links = data.get("links")
+    if isinstance(links, dict):
+        for k, v in links.items():
+            if v is None:
+                continue
+            if not isinstance(v, str):
+                errors.append(f"links.{k} must be a string URL")
+                continue
+            parsed = urllib.parse.urlparse(v)
+            if not parsed.scheme or not parsed.netloc:
+                errors.append(f"links.{k} '{v}' is not a valid URL")
+
+    return errors
+
+
+# ---------------------------------------------------------------------------
+# Flags
+# ---------------------------------------------------------------------------
+
+
+def compute_flags(
+    metadata: dict | None,
+    github_data: dict,
+    today: date,
+    metadata_errors: list[str] | None = None,
+) -> list[str]:
+    flags: list[str] = []
+    errors = metadata_errors or []
+
+    if github_data.get("repo_not_found"):
+        flags.append("repo-not-found")
+
+    if "metadata-missing" in errors:
+        flags.append("metadata-missing")
+    elif errors:
+        flags.append("metadata-invalid")
+
+    md = metadata or {}
+    deprecated = bool(md.get("deprecated"))
+
+    last_commit = github_data.get("last_commit_date")
+    if last_commit and not deprecated:
+        if (today - last_commit).days > STALE_DAYS:
+            flags.append("stale")
+
+    level = md.get("level")
+    if level in ("alpha", "beta", "ga") and not deprecated:
+        demo = md.get("last_presales_demo")
+        demo_date = _parse_iso(str(demo)) if demo else None
+        if demo_date is None or (today - demo_date).days > DEMO_LAPSED_DAYS:
+            flags.append("demo-lapsed")
+
+    if level == "ga" and md.get("product_owner") in (None, ""):
+        flags.append("no-product-owner")
+
+    if deprecated:
+        flags.append("deprecated")
+
+    return flags
+
+
+# ---------------------------------------------------------------------------
+# Rendering
+# ---------------------------------------------------------------------------
+
+
+def _fmt_date(d: date | None) -> str:
+    if d is None:
+        return "–"
+    return d.strftime("%b %d")
+
+
+def _user_link(username: str) -> str:
+    return f"[@{username}](https://github.com/{username})"
+
+
+def _standalone_value(scope: Any) -> str:
+    if not isinstance(scope, dict):
+        return "–"
+    if "standalone-supported" not in scope:
+        return "–"
+    v = scope["standalone-supported"]
+    if v is True or (isinstance(v, str) and v.lower() == "yes"):
+        return "Yes"
+    if v is False or (isinstance(v, str) and v.lower() == "no"):
+        return "No"
+    return "–"
+
+
+def _nebariapp_value(v: Any) -> str:
+    mapping = {"none": "None", "partial": "Partial", "full": "Full", "na": "N/A"}
+    if not isinstance(v, str):
+        return "N/A"
+    return mapping.get(v, "N/A")
+
+
+def _level_label(level: Any) -> str:
+    if not isinstance(level, str) or level not in LEVELS:
+        return "–"
+    label = {"experimental": "Experimental", "alpha": "Alpha", "beta": "Beta", "ga": "GA"}[level]
+    return f"**{label}**" if level == "ga" else label
+
+
+def _truncate(s: str, n: int) -> str:
+    if len(s) <= n:
+        return s
+    return s[: n - 1] + "…"
+
+
+def render_row(row: PackRow) -> str:
+    md = row.metadata or {}
+    gh = row.github_data
+
+    display = md.get("display_name") or row.repo.split("/")[-1]
+    pack_cell = f"[{display}](https://github.com/{row.repo})"
+
+    level_cell = _level_label(md.get("level"))
+    owner = md.get("owner")
+    owner_cell = _user_link(owner) if isinstance(owner, str) and owner else "–"
+    nai_cell = _nebariapp_value(md.get("nebariapp_integration", "na"))
+    standalone_cell = _standalone_value(md.get("scope"))
+
+    tag = gh.get("release_tag")
+    rdate = gh.get("release_date")
+    release_cell = f"{tag} ({_fmt_date(rdate)})" if tag else "–"
+
+    commit_cell = _fmt_date(gh.get("last_commit_date"))
+
+    demo_raw = md.get("last_presales_demo")
+    demo_by = md.get("last_presales_demo_by")
+    demo_date = _parse_iso(str(demo_raw)) if demo_raw else None
+    if demo_date and isinstance(demo_by, str) and demo_by:
+        demo_cell = f"{_fmt_date(demo_date)} by {_user_link(demo_by)}"
+    elif demo_date:
+        demo_cell = _fmt_date(demo_date)
+    else:
+        demo_cell = "–"
+
+    flags_cell = " ".join(FLAG_DISPLAY.get(f, f) for f in row.flags) if row.flags else "–"
+
+    notes = md.get("demo_notes")
+    if row.metadata_errors and "metadata-missing" not in row.metadata_errors:
+        notes_cell = "; ".join(row.metadata_errors)
+    elif isinstance(notes, str) and notes:
+        notes_cell = _truncate(notes, 100)
+    else:
+        notes_cell = "–"
+    notes_cell = notes_cell.replace("|", "\\|").replace("\n", " ")
+
+    return (
+        f"| {pack_cell} | {level_cell} | {owner_cell} | {nai_cell} | {standalone_cell} "
+        f"| {release_cell} | {commit_cell} | {demo_cell} | {flags_cell} | {notes_cell} |"
+    )
+
+
+def render_deprecated_row(row: PackRow) -> str:
+    md = row.metadata or {}
+    display = md.get("display_name") or row.repo.split("/")[-1]
+    pack_cell = f"[{display}](https://github.com/{row.repo})"
+    was_level = _level_label(md.get("level"))
+    sunset = md.get("sunset_date") or "–"
+    docs = (md.get("links") or {}).get("docs") if isinstance(md.get("links"), dict) else None
+    migration = docs or "–"
+    return f"| {pack_cell} | {was_level} | {sunset} | {migration} |"
+
+
+def render_dashboard(rows: list[PackRow], generated_at: datetime, workflow_url: str | None = None) -> str:
+    active = [r for r in rows if not (r.metadata and r.metadata.get("deprecated"))]
+    deprecated = [r for r in rows if r.metadata and r.metadata.get("deprecated")]
+
+    counts = {"ga": 0, "beta": 0, "alpha": 0, "experimental": 0}
+    for r in active:
+        lvl = (r.metadata or {}).get("level")
+        if lvl in counts:
+            counts[lvl] += 1
+
+    flag_totals: dict[str, int] = {}
+    flagged_packs = 0
+    for r in rows:
+        non_deprecated_flags = [f for f in r.flags if f != "deprecated"]
+        if non_deprecated_flags:
+            flagged_packs += 1
+        for f in r.flags:
+            flag_totals[f] = flag_totals.get(f, 0) + 1
+
+    ts = generated_at.strftime("%Y-%m-%dT%H:%M:%SZ")
+    refresh_link = f"[Trigger a refresh]({workflow_url})." if workflow_url else "Trigger a refresh via the `Refresh pack dashboard` workflow."
+
+    lines: list[str] = []
+    lines.append("<!-- This file is auto-generated by generate.py. Do not edit directly. -->")
+    lines.append("")
+    lines.append("# Nebari Software Packs")
+    lines.append("")
+    lines.append(f"_Last regenerated: {ts}. {refresh_link}_")
+    lines.append("")
+    lines.append("## At a glance")
+    lines.append("")
+    lines.append(
+        f"- {counts['ga']} GA · {counts['beta']} Beta · {counts['alpha']} Alpha · "
+        f"{counts['experimental']} Experimental · {len(deprecated)} Deprecated"
+    )
+    if flag_totals:
+        breakdown = ", ".join(f"{k}: {v}" for k, v in sorted(flag_totals.items()))
+        lines.append(f"- {flagged_packs} packs flagged · breakdown: {breakdown}")
+    else:
+        lines.append(f"- {flagged_packs} packs flagged")
+    lines.append("")
+    lines.append("## Packs")
+    lines.append("")
+    lines.append("| Pack | Level | Owner | NebariApp | Standalone | Last release | Last commit | Last demo | Flags | Notes |")
+    lines.append("|---|---|---|---|---|---|---|---|---|---|")
+    for r in active:
+        lines.append(render_row(r))
+    lines.append("")
+
+    if deprecated:
+        lines.append("## Deprecated packs")
+        lines.append("")
+        lines.append("| Pack | Was Level | Sunset date | Migration |")
+        lines.append("|---|---|---|---|")
+        for r in deprecated:
+            lines.append(render_deprecated_row(r))
+        lines.append("")
+
+    lines.append("## How this dashboard works")
+    lines.append("")
+    lines.append(
+        "Each row is built from two sources: a `pack-metadata.yaml` file at the "
+        "root of each pack repo (edited by the pack's owner) and a small set of "
+        "GitHub API fields (latest release, last commit, open issues)."
+    )
+    lines.append("")
+    lines.append(
+        "Pack maturity levels are defined in the "
+        "[release readiness checklist]"
+        "(https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md)."
+    )
+    lines.append("")
+    lines.append(
+        "To add a pack to this dashboard, add `pack-metadata.yaml` to the pack "
+        "repo and open a PR adding the repo to `tracked-packs.yaml` here. See "
+        "[CONTRIBUTING.md](CONTRIBUTING.md) for details."
+    )
+    lines.append("")
+    lines.append(f"_Generated: {ts}_")
+    lines.append("")
+
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Orchestration
+# ---------------------------------------------------------------------------
+
+
+def build_row(pack: dict, token: str | None, today: date) -> PackRow:
+    repo = pack["repo"]
+    expected_name = repo.split("/")[-1]
+    row = PackRow(repo=repo)
+
+    github_data = fetch_github_data(repo, token)
+    row.github_data = github_data
+    if github_data.get("repo_not_found"):
+        row.repo_not_found = True
+        print(f"ERROR: repo not found: {repo}", file=sys.stderr)
+        row.flags = compute_flags(None, github_data, today, ["metadata-missing"])
+        return row
+
+    metadata, errors = fetch_metadata(repo, token)
+    if metadata is None:
+        row.metadata = None
+        row.metadata_errors = errors
+        if errors == ["metadata-missing"]:
+            print(f"WARN: pack-metadata.yaml missing in {repo}", file=sys.stderr)
+        else:
+            print(f"WARN: pack-metadata.yaml unreadable in {repo}: {errors}", file=sys.stderr)
+    else:
+        validation_errors = validate_metadata(metadata, expected_name)
+        row.metadata = metadata
+        row.metadata_errors = validation_errors
+        if validation_errors:
+            print(f"WARN: pack-metadata.yaml invalid in {repo}: {validation_errors}", file=sys.stderr)
+        else:
+            print(f"INFO: {repo} ok", file=sys.stderr)
+
+    row.flags = compute_flags(row.metadata, github_data, today, row.metadata_errors)
+    return row
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Generate the Nebari pack dashboard.")
+    parser.add_argument("--tracked-packs", default="tracked-packs.yaml")
+    parser.add_argument("--output", default="README.md")
+    parser.add_argument("--dry-run", action="store_true", help="Print to stdout instead of writing the output file.")
+    parser.add_argument("--workflow-url", default=None, help="URL to the refresh workflow for the regen link.")
+    args = parser.parse_args(argv)
+
+    try:
+        packs = load_tracked_packs(args.tracked_packs)
+    except (FileNotFoundError, ValueError, yaml.YAMLError) as e:
+        print(f"ERROR: cannot load {args.tracked_packs}: {e}", file=sys.stderr)
+        return 1
+
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        print("WARN: GITHUB_TOKEN not set; using unauthenticated requests (60/hr limit)", file=sys.stderr)
+
+    today = datetime.now(timezone.utc).date()
+    rows = [build_row(p, token, today) for p in packs]
+
+    generated_at = datetime.now(timezone.utc)
+    output = render_dashboard(rows, generated_at, workflow_url=args.workflow_url)
+
+    if args.dry_run:
+        sys.stdout.write(output)
+        return 0
+
+    try:
+        with open(args.output, encoding="utf-8") as f:
+            existing = f.read()
+    except FileNotFoundError:
+        existing = None
+
+    if existing == output:
+        print("INFO: no changes to output", file=sys.stderr)
+        return 0
+
+    with open(args.output, "w", encoding="utf-8") as f:
+        f.write(output)
+    print(f"INFO: wrote {args.output}", file=sys.stderr)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
