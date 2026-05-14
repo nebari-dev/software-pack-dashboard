@@ -545,10 +545,20 @@ def render_dashboard(rows: list[PackRow], generated_at: datetime, workflow_url: 
     )
     lines.append("")
     lines.append(
-        "To add a pack to this dashboard, add `pack-metadata.yaml` to the pack "
-        "repo and open a PR adding the repo to `tracked-packs.yaml` here. See "
-        "[CONTRIBUTING.md](CONTRIBUTING.md) for details."
+        "To add a pack to this dashboard:"
     )
+    lines.append("")
+    lines.append(
+        "1. Copy [`schema/pack-metadata.example.yaml`](schema/pack-metadata.example.yaml) "
+        "into your pack repo as `pack-metadata.yaml`, fill in the required fields, "
+        "and merge to your default branch."
+    )
+    lines.append(
+        "2. Open a PR against this repo adding your pack to "
+        "[`tracked-packs.yaml`](tracked-packs.yaml)."
+    )
+    lines.append("")
+    lines.append("See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.")
     lines.append("")
     lines.append(f"_Generated: {ts}_")
     lines.append("")

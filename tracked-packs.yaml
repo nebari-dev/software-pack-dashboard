@@ -17,3 +17,4 @@ packs:
   - repo: nebari-dev/nebari-longhorn-backup-pack
   - repo: nebari-dev/nebari-provenance-collector-pack
   - repo: nebari-dev/nebari-pi-coding-agent-pack
+  - repo: nebari-dev/skillsctl
