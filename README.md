@@ -2,12 +2,12 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-14T13:12:58Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-14T13:20:54Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
 - 0 GA · 0 Beta · 1 Alpha · 0 Experimental · 0 Deprecated
-- 1 packs flagged · breakdown: metadata-missing: 1
+- 13 packs flagged · breakdown: metadata-missing: 13, repo-not-found: 3
 
 ## Packs
 
@@ -15,6 +15,18 @@ _Last regenerated: 2026-05-14T13:12:58Z. Trigger a refresh via the `Refresh pack
 |---|---|---|---|---|---|---|---|---|
 | [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | 🆘 metadata-missing | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | – |
+| [nebari-chat-pack](https://github.com/nebari-dev/nebari-chat-pack) | – | – | N/A | – | v0.0.8 (May 13) | May 13 | 🆘 metadata-missing | – |
+| [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) | – | – | N/A | – | nebari-nebi-pack-0.1.0-alpha.4 (Apr 13) | Apr 17 | 🆘 metadata-missing | – |
+| [nebari-capability-pack](https://github.com/nebari-dev/nebari-capability-pack) | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
+| [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) | – | – | N/A | – | nebari-lgtm-pack-0.1.0-alpha.6 (Mar 23) | Mar 31 | 🆘 metadata-missing | – |
+| [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) | – | – | N/A | – | v0.3.1 (Apr 09) | Apr 09 | 🆘 metadata-missing | – |
+| [nebari-rayserve-pack](https://github.com/nebari-dev/nebari-rayserve-pack) | – | – | N/A | – | nebari-rayserve-pack-0.3.0 (May 01) | May 01 | 🆘 metadata-missing | – |
+| [nebari-mlflow-pack](https://github.com/nebari-dev/nebari-mlflow-pack) | – | – | N/A | – | nebari-mlflow-pack-1.0.0 (Apr 09) | Apr 15 | 🆘 metadata-missing | – |
+| [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
+| [nebari-external-auth-pack](https://github.com/nebari-dev/nebari-external-auth-pack) | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
+| [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | – | – | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 07 | 🆘 metadata-missing | – |
+| [nebari-provenance-collector-pack](https://github.com/nebari-dev/nebari-provenance-collector-pack) | – | – | N/A | – | v0.1.0-alpha.4 (May 14) | May 14 | 🆘 metadata-missing | – |
+| [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | – | – | N/A | – | – | Apr 15 | 🆘 metadata-missing | – |
 
 ## Column reference
 
@@ -43,4 +55,4 @@ Each row is built from two sources: a `pack-metadata.yaml` file at the root of e
 
 To add a pack to this dashboard, add `pack-metadata.yaml` to the pack repo and open a PR adding the repo to `tracked-packs.yaml` here. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-_Generated: 2026-05-14T13:12:58Z_
+_Generated: 2026-05-14T13:20:54Z_
