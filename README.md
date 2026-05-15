@@ -2,12 +2,12 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-15T13:55:09Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-15T16:02:06Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 1 Beta · 3 Alpha · 1 Experimental · 0 Deprecated
-- 10 packs flagged · breakdown: metadata-missing: 10, repo-not-found: 3
+- 0 GA · 1 Beta · 3 Alpha · 2 Experimental · 0 Deprecated
+- 9 packs flagged · breakdown: metadata-missing: 9, repo-not-found: 3
 
 ## Packs
 
@@ -15,7 +15,7 @@ _Last regenerated: 2026-05-15T13:55:09Z. Trigger a refresh via the `Refresh pack
 |---|---|---|---|---|---|---|---|---|---|
 | [nebari-data-science-pack](https://github.com/nebari-dev/nebari-data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | – | – | N/A | – | nebari-data-science-pack-0.1.0-alpha.11 (Apr 13) | May 05 | 🆘 metadata-missing | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | – |
-| [nebari-chat-pack](https://github.com/nebari-dev/nebari-chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | – | – | N/A | – | v0.0.8 (May 13) | May 13 | 🆘 metadata-missing | – |
+| [Chat Pack](https://github.com/nebari-dev/nebari-chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Experimental | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.8 (May 13) | May 15 | – | – |
 | [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) | Nebi deployment pack for Nebari | – | – | N/A | – | nebari-nebi-pack-0.1.0-alpha.4 (Apr 13) | Apr 17 | 🆘 metadata-missing | – |
 | [nebari-capability-pack](https://github.com/nebari-dev/nebari-capability-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | – | – | N/A | – | nebari-lgtm-pack-0.1.0-alpha.6 (Mar 23) | Mar 31 | 🆘 metadata-missing | – |
@@ -25,7 +25,7 @@ _Last regenerated: 2026-05-15T13:55:09Z. Trigger a refresh via the `Refresh pack
 | [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [nebari-external-auth-pack](https://github.com/nebari-dev/nebari-external-auth-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [nebari-longhorn-backup-pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | – | – | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 07 | 🆘 metadata-missing | – |
-| [Provenance Collector](https://github.com/nebari-dev/nebari-provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | May 14 | – | – |
+| [Provenance Collector](https://github.com/nebari-dev/nebari-provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | May 15 | – | – |
 | [nebari-pi-coding-agent-pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | – | – | N/A | – | – | Apr 15 | 🆘 metadata-missing | – |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
 
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-05-15T13:55:09Z_
+_Generated: 2026-05-15T16:02:06Z_
