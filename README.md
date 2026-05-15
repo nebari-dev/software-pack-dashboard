@@ -2,12 +2,12 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-15T11:51:13Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-15T13:12:35Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 1 Beta · 2 Alpha · 1 Experimental · 0 Deprecated
-- 11 packs flagged · breakdown: metadata-missing: 11, repo-not-found: 3
+- 0 GA · 1 Beta · 3 Alpha · 1 Experimental · 0 Deprecated
+- 10 packs flagged · breakdown: metadata-missing: 10, repo-not-found: 3
 
 ## Packs
 
@@ -19,7 +19,7 @@ _Last regenerated: 2026-05-15T11:51:13Z. Trigger a refresh via the `Refresh pack
 | [nebari-nebi-pack](https://github.com/nebari-dev/nebari-nebi-pack) | Nebi deployment pack for Nebari | – | – | N/A | – | nebari-nebi-pack-0.1.0-alpha.4 (Apr 13) | Apr 17 | 🆘 metadata-missing | – |
 | [nebari-capability-pack](https://github.com/nebari-dev/nebari-capability-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [nebari-lgtm-pack](https://github.com/nebari-dev/nebari-lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | – | – | N/A | – | nebari-lgtm-pack-0.1.0-alpha.6 (Mar 23) | Mar 31 | 🆘 metadata-missing | – |
-| [nebari-superset-pack](https://github.com/nebari-dev/nebari-superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | – | – | N/A | – | v0.3.1 (Apr 09) | Apr 09 | 🆘 metadata-missing | – |
+| [Superset Pack](https://github.com/nebari-dev/nebari-superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | May 15 | – | – |
 | [Rayserve Pack](https://github.com/nebari-dev/nebari-rayserve-pack) | A Nebari software pack that deploys Ray Serve on Kubernetes via the RayService CRD, with optional routing, TLS, and OIDC authentication through the nebari-operator. | Experimental | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | nebari-rayserve-pack-0.3.0 (May 01) | May 14 | – | – |
 | [nebari-mlflow-pack](https://github.com/nebari-dev/nebari-mlflow-pack) | A Nebari software pack that deploys MLflow with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | – | – | N/A | – | nebari-mlflow-pack-1.0.0 (Apr 09) | Apr 15 | 🆘 metadata-missing | – |
 | [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-05-15T11:51:13Z_
+_Generated: 2026-05-15T13:12:35Z_
