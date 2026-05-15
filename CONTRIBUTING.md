@@ -18,7 +18,7 @@ A fully commented template with every field, when it's required, what the allowe
 
 > [`schema/pack-metadata.example.yaml`](schema/pack-metadata.example.yaml)
 
-Copy that file into your pack repo, rename it to `pack-metadata.yaml`, delete the lines you don't need, and fill in the rest. The minimum required fields are `name`, `display_name`, `description`, `level`, `owner`, and `deprecated`.
+Copy that file into your pack repo, rename it to `pack-metadata.yaml`, delete the lines you don't need, and fill in the rest. The minimum required fields are `name`, `display_name`, `level`, `owner`, and `deprecated`. (`description` is optional - the dashboard's Description column is sourced from the GitHub repo description, not this file.)
 
 ### Step 2: Validate locally before pushing
 

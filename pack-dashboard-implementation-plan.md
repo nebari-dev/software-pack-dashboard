@@ -98,7 +98,7 @@ links:
 |---|---|---|---|
 | `name` | yes | string | Must equal the GitHub repo name (e.g. `nebari-data-science-pack`). Used to cross-check the file is in the right repo. |
 | `display_name` | yes | string | Title-case, used as the link text on the dashboard. |
-| `description` | yes | string | One sentence. Shown in a column on the dashboard. |
+| `description` | no | string | One sentence, max 200 chars. The dashboard's Description column is sourced from the GitHub repo description, not this field. Validated against the 200-char limit only if present. |
 | `level` | yes | enum | `experimental` \| `alpha` \| `beta` \| `ga`. Lowercase. |
 | `owner` | yes | string | Single GitHub username (no `@`). For multiple owners, use the most accountable one; others go in `CODEOWNERS`. |
 | `deprecated` | yes | bool | `true` or `false`. |

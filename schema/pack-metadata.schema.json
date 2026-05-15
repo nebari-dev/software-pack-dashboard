@@ -7,7 +7,6 @@
   "required": [
     "name",
     "display_name",
-    "description",
     "level",
     "owner",
     "deprecated"

@@ -274,7 +274,7 @@ def _parse_iso(s: str) -> date | None:
 def validate_metadata(data: dict, expected_name: str) -> list[str]:
     """Run validation rules from §4.4. Returns list of error strings."""
     errors: list[str] = []
-    required = ("name", "display_name", "description", "level", "owner", "deprecated")
+    required = ("name", "display_name", "level", "owner", "deprecated")
 
     for field_name in required:
         if field_name not in data:

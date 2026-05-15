@@ -29,7 +29,7 @@ def _load(name: str) -> dict:
     "fixture,expected_name,must_error_contain",
     [
         ("valid-metadata.yaml", "nebari-data-science-pack", None),
-        ("invalid-missing-field.yaml", "nebari-data-science-pack", "description"),
+        ("invalid-missing-field.yaml", "nebari-data-science-pack", "owner"),
         ("invalid-bad-level.yaml", "nebari-data-science-pack", "level must be one of"),
         ("deprecated-without-sunset.yaml", "nebari-data-science-pack", "sunset_date"),
     ],
@@ -72,6 +72,13 @@ def test_validate_metadata_description_too_long():
     data["description"] = "x" * 201
     errors = generate.validate_metadata(data, "nebari-data-science-pack")
     assert any("description exceeds" in e for e in errors)
+
+
+def test_validate_metadata_description_optional():
+    data = _load("valid-metadata.yaml")
+    del data["description"]
+    errors = generate.validate_metadata(data, "nebari-data-science-pack")
+    assert errors == [], f"description is optional, got {errors}"
 
 
 def test_validate_metadata_bad_url():
