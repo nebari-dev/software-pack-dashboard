@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-22T17:05:01Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-22T19:28:16Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -25,7 +25,7 @@ _Last regenerated: 2026-05-22T17:05:01Z. Trigger a refresh via the `Refresh pack
 | [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [nebari-external-auth-pack](https://github.com/nebari-dev/nebari-external-auth-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [Longhorn Backup Pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 18 | – | – |
-| [Provenance Collector](https://github.com/nebari-dev/nebari-provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | May 21 | – | – |
+| [Provenance Collector](https://github.com/nebari-dev/nebari-provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | May 22 | – | – |
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | May 19 | – | – |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
 
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-05-22T17:05:01Z_
+_Generated: 2026-05-22T19:28:16Z_
