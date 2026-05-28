@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-05-28T11:34:07Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-05-28T15:38:58Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -21,7 +21,7 @@ _Last regenerated: 2026-05-28T11:34:07Z. Trigger a refresh via the `Refresh pack
 | [LGTM Pack](https://github.com/nebari-dev/nebari-lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.0-alpha.6 (Mar 23) | May 15 | – | – |
 | [Superset Pack](https://github.com/nebari-dev/nebari-superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | May 15 | – | – |
 | [Rayserve Pack](https://github.com/nebari-dev/nebari-rayserve-pack) | A Nebari software pack that deploys Ray Serve on Kubernetes via the RayService CRD, with optional routing, TLS, and OIDC authentication through the nebari-operator. | Experimental | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | nebari-rayserve-pack-0.3.0 (May 01) | May 14 | – | – |
-| [MLflow Pack](https://github.com/nebari-dev/nebari-mlflow-pack) | A Nebari software pack that deploys MLflow with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-mlflow-pack-1.0.0 (Apr 09) | May 15 | – | – |
+| [MLflow Pack](https://github.com/nebari-dev/nebari-mlflow-pack) | A Nebari software pack that deploys MLflow with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-mlflow-pack-1.0.0 (Apr 09) | May 28 | – | – |
 | [nebari-data-engineering-pack](https://github.com/nebari-dev/nebari-data-engineering-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [nebari-external-auth-pack](https://github.com/nebari-dev/nebari-external-auth-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [Longhorn Backup Pack](https://github.com/nebari-dev/nebari-longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-longhorn-backup-0.3.0 (May 07) | May 18 | – | – |
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-05-28T11:34:07Z_
+_Generated: 2026-05-28T15:38:58Z_
