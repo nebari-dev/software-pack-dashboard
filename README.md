@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-06-03T16:28:33Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-06-03T20:15:45Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -13,7 +13,7 @@ _Last regenerated: 2026-06-03T16:28:33Z. Trigger a refresh via the `Refresh pack
 
 | Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| [Data Science Pack](https://github.com/nebari-dev/nebari-data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0-alpha.13 (May 18) | May 22 | – | – |
+| [Data Science Pack](https://github.com/nebari-dev/nebari-data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0-alpha.13 (May 18) | Jun 03 | – | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/nebari-llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.8 (Apr 28) | May 14 | – | – |
 | [Chat Pack](https://github.com/nebari-dev/nebari-chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Experimental | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.11 (Jun 03) | Jun 03 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebari-nebi-pack) | Nebi deployment pack for Nebari | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.0-alpha.4 (Apr 13) | May 19 | – | – |
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-06-03T16:28:33Z_
+_Generated: 2026-06-03T20:15:45Z_
