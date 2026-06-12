@@ -18,3 +18,4 @@ packs:
   - repo: nebari-dev/nebari-provenance-collector-pack
   - repo: nebari-dev/nebari-pi-coding-agent-pack
   - repo: nebari-dev/skillsctl
+  - repo: nebari-dev/nebari-langfuse-pack
