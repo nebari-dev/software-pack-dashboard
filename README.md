@@ -2,11 +2,11 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-06-12T08:19:56Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-06-12T09:30:08Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 1 Beta · 3 Alpha · 8 Experimental · 0 Deprecated
+- 0 GA · 2 Beta · 3 Alpha · 8 Experimental · 0 Deprecated
 - 3 packs flagged · breakdown: metadata-missing: 3, repo-not-found: 3
 
 ## Packs
@@ -28,6 +28,7 @@ _Last regenerated: 2026-06-12T08:19:56Z. Trigger a refresh via the `Refresh pack
 | [Provenance Collector](https://github.com/nebari-dev/nebari-provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | May 29 | – | – |
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/nebari-pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | May 19 | – | – |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
+| [Langfuse Pack](https://github.com/nebari-dev/nebari-langfuse-pack) | Deploys Langfuse, an open-source LLM engineering platform: tracing, evals, prompt management, and metrics for debugging and improving LLM applications. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Jun 12 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
 
 ## Column reference
 
@@ -62,4 +63,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-06-12T08:19:56Z_
+_Generated: 2026-06-12T09:30:08Z_
