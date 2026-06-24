@@ -7,7 +7,7 @@ packs:
   - repo: nebari-dev/llm-serving-pack
   - repo: nebari-dev/chat-pack
   - repo: nebari-dev/nebi-pack
-  - repo: nebari-dev/capability-pack
+  - repo: nebari-dev/python-capability-pack
   - repo: nebari-dev/lgtm-pack
   - repo: nebari-dev/superset-pack
   - repo: nebari-dev/rayserve-pack
