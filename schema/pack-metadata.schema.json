@@ -40,6 +40,10 @@
     "deprecated": {
       "type": "boolean"
     },
+    "docs_site": {
+      "type": "boolean",
+      "description": "If true, this pack has a docs site routed at packs.nebari.dev/<repo-short-name>/. Default false."
+    },
     "sunset_date": {
       "type": ["string", "null"],
       "format": "date",
