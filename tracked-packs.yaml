@@ -3,19 +3,19 @@
 # first-party tracked pack. Removing means it no longer appears on the
 # dashboard. Both operations require a PR to this repo.
 packs:
-  - repo: nebari-dev/nebari-data-science-pack
-  - repo: nebari-dev/nebari-llm-serving-pack
-  - repo: nebari-dev/nebari-chat-pack
-  - repo: nebari-dev/nebari-nebi-pack
-  - repo: nebari-dev/nebari-capability-pack
-  - repo: nebari-dev/nebari-lgtm-pack
-  - repo: nebari-dev/nebari-superset-pack
-  - repo: nebari-dev/nebari-rayserve-pack
-  - repo: nebari-dev/nebari-mlflow-pack
-  - repo: nebari-dev/nebari-data-engineering-pack
-  - repo: nebari-dev/nebari-external-auth-pack
-  - repo: nebari-dev/nebari-longhorn-backup-pack
-  - repo: nebari-dev/nebari-provenance-collector-pack
-  - repo: nebari-dev/nebari-pi-coding-agent-pack
+  - repo: nebari-dev/data-science-pack
+  - repo: nebari-dev/llm-serving-pack
+  - repo: nebari-dev/chat-pack
+  - repo: nebari-dev/nebi-pack
+  - repo: nebari-dev/capability-pack
+  - repo: nebari-dev/lgtm-pack
+  - repo: nebari-dev/superset-pack
+  - repo: nebari-dev/rayserve-pack
+  - repo: nebari-dev/mlflow-pack
+  - repo: nebari-dev/data-engineering-pack
+  - repo: nebari-dev/external-auth-pack
+  - repo: nebari-dev/longhorn-backup-pack
+  - repo: nebari-dev/provenance-collector-pack
+  - repo: nebari-dev/pi-coding-agent-pack
   - repo: nebari-dev/skillsctl
-  - repo: nebari-dev/nebari-langfuse-pack
+  - repo: nebari-dev/langfuse-pack
