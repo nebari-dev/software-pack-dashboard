@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-06-24T07:45:50Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-06-24T07:48:29Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -17,7 +17,7 @@ _Last regenerated: 2026-06-24T07:45:50Z. Trigger a refresh via the `Refresh pack
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jun 23 | ⚠️ metadata-invalid | name 'nebari-llm-serving-pack' does not match repo name 'llm-serving-pack' |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Experimental | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.13 (Jun 18) | Jun 23 | ⚠️ metadata-invalid | name 'nebari-chat-pack' does not match repo name 'chat-pack' |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi deployment pack for Nebari | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.0 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-nebi-pack' does not match repo name 'nebi-pack' |
-| [capability-pack](https://github.com/nebari-dev/capability-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
+| [python-capability-pack](https://github.com/nebari-dev/python-capability-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-lgtm-pack' does not match repo name 'lgtm-pack' |
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jun 10 | ⚠️ metadata-invalid | name 'nebari-superset-pack' does not match repo name 'superset-pack' |
 | [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | A Nebari software pack that deploys Ray Serve on Kubernetes via the RayService CRD, with optional routing, TLS, and OIDC authentication through the nebari-operator. | Experimental | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | v0.3.1 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-rayserve-pack' does not match repo name 'rayserve-pack' |
@@ -63,4 +63,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-06-24T07:45:50Z_
+_Generated: 2026-06-24T07:48:29Z_
