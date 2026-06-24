@@ -73,6 +73,10 @@ nebariapp_integration: full
 scope:
   standalone-supported: yes    # yes | no    Default: no
 
+# Optional. Set to true once your pack has a docs site deployed to Cloudflare Pages.
+# When true, the dashboard adds a route packs.nebari.dev/<repo-name>/ for your docs.
+docs_site: false
+
 # When the pack was most recently promoted to its current level.
 # ISO 8601 date. Useful audit trail.
 # last_promoted_at: 2026-04-15

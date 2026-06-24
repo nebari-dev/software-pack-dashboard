@@ -8,3 +8,6 @@ venv/
 .ruff_cache/
 .coverage
 .DS_Store
+
+# Generated landing page (built in CI from generate.py --html)
+site/

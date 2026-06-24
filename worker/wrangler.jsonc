@@ -1,0 +1,14 @@
+{
+  // The packs.nebari.dev custom domain is bound ONCE, manually, in the
+  // Cloudflare dashboard (Workers & Pages -> packs-portal-worker -> Settings
+  // -> Domains & Routes -> Add custom domain). It is intentionally NOT set
+  // here: the deploy token lacks Workers Routes:Edit, and a "routes" block
+  // would make `wrangler deploy` fail with a permissions error.
+  "name": "packs-portal-worker",
+  "main": "src/index.js",
+  "compatibility_date": "2025-06-01",
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  }
+}

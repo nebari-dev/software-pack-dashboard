@@ -302,6 +302,86 @@ def test_render_dashboard_smoke():
     assert "| [B]" not in main_table_section
 
 
+# ---------------------------------------------------------------------------
+# HTML landing page renderer
+# ---------------------------------------------------------------------------
+
+
+def test_render_html_has_intro_table_and_links():
+    rows = [
+        generate.PackRow(
+            repo="nebari-dev/llm-serving-pack",
+            metadata={
+                "display_name": "LLM Serving Pack",
+                "level": "alpha",
+                "owner": "chuckmcandrew",
+                "deprecated": False,
+                "docs_site": True,
+                "links": {"docs": "https://packs.nebari.dev/llm-serving-pack/"},
+            },
+            github_data={},
+            flags=[],
+        ),
+    ]
+    html = generate.render_html(rows, generated_at="2026-06-24")
+    # Structure
+    assert "<table" in html
+    assert "<!doctype html>" in html.lower()
+    # Required links
+    assert "nebari.dev" in html  # link to main docs
+    assert "/building-a-software-pack/" in html  # link to the guide
+    assert "software pack" in html.lower()  # intro copy
+    # Meaningful row content (not just static strings)
+    assert "LLM Serving Pack" in html
+    assert "chuckmcandrew" in html
+    assert "https://packs.nebari.dev/llm-serving-pack/" in html
+    assert "2026-06-24" in html
+
+
+def test_render_html_escapes_and_omits_missing_docs():
+    rows = [
+        generate.PackRow(
+            repo="nebari-dev/x-pack",
+            metadata={
+                "display_name": "A & B <Pack>",
+                "level": "ga",
+                "owner": "alice",
+                "deprecated": False,
+                "product_owner": "bob",
+            },
+            github_data={},
+            flags=[],
+        ),
+    ]
+    html = generate.render_html(rows, generated_at="2026-06-24")
+    # Display name is HTML-escaped, not injected raw
+    assert "A &amp; B &lt;Pack&gt;" in html
+    assert "<Pack>" not in html
+    # Row has no links.docs, so its table cell renders no "docs" anchor
+    table = html.split("<table")[1].split("</table>")[0]
+    assert ">docs</a>" not in table
+
+
+def test_render_html_rejects_unsafe_docs_scheme():
+    rows = [
+        generate.PackRow(
+            repo="nebari-dev/evil-pack",
+            metadata={
+                "display_name": "Evil",
+                "level": "alpha",
+                "owner": "a",
+                "deprecated": False,
+                "links": {"docs": "javascript:alert(1)"},
+            },
+            github_data={},
+            flags=[],
+        ),
+    ]
+    html = generate.render_html(rows, generated_at="2026-06-24")
+    assert "javascript:" not in html
+    assert ">docs</a>" not in html
+
+
 def test_load_tracked_packs(tmp_path):
     p = tmp_path / "tp.yaml"
     p.write_text("packs:\n  - repo: a/b\n  - repo: c/d\n")
