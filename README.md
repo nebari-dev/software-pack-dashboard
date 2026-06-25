@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-06-25T08:53:03Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-06-25T11:36:39Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -14,7 +14,7 @@ _Last regenerated: 2026-06-25T08:53:03Z. Trigger a refresh via the `Refresh pack
 | Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-data-science-pack' does not match repo name 'data-science-pack' |
-| [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jun 23 | ⚠️ metadata-invalid | name 'nebari-llm-serving-pack' does not match repo name 'llm-serving-pack' |
+| [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jun 25 | ⚠️ metadata-invalid | name 'nebari-llm-serving-pack' does not match repo name 'llm-serving-pack' |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Experimental | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.13 (Jun 18) | Jun 23 | ⚠️ metadata-invalid | name 'nebari-chat-pack' does not match repo name 'chat-pack' |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi deployment pack for Nebari | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.0 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-nebi-pack' does not match repo name 'nebi-pack' |
 | [python-capability-pack](https://github.com/nebari-dev/python-capability-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
@@ -63,4 +63,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-06-25T08:53:03Z_
+_Generated: 2026-06-25T11:36:39Z_
