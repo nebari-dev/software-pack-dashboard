@@ -9,5 +9,7 @@ venv/
 .coverage
 .DS_Store
 
-# Generated landing page (built in CI from generate.py --html)
-site/
+site/public/
+site/resources/
+site/.hugo_build.lock
+site/content/_index.md
