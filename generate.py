@@ -8,7 +8,6 @@ README.md (or stdout under --dry-run).
 from __future__ import annotations
 
 import argparse
-import html as html_lib
 import json
 import os
 import sys
@@ -580,66 +579,57 @@ def render_dashboard(rows: list[PackRow], generated_at: datetime, workflow_url: 
 
 
 def _html_level_label(level: Any) -> str:
-    """Plain-text level label for HTML (markdown-free version of _level_label)."""
+    """Plain-text level label (markdown-free) for use in table cells."""
     if not isinstance(level, str) or level not in LEVELS:
         return "–"
     return {"experimental": "Experimental", "alpha": "Alpha", "beta": "Beta", "ga": "GA"}[level]
 
 
-def render_html(rows: list[PackRow], generated_at: str) -> str:
-    """Render a minimal, self-contained landing page for packs.nebari.dev.
+def _md_escape_cell(value: str) -> str:
+    """Escape a value for safe use inside a GitHub-flavored Markdown table cell."""
+    return value.replace("\\", "\\\\").replace("|", "\\|").replace("\n", " ").strip()
 
-    One intro paragraph defining a software pack, a link to nebari.dev, a link
-    to the build-a-pack guide, and a table reusing the same per-pack data as
-    render_dashboard (display_name, level, owner, and an optional docs link
-    from links.docs). All dynamic values are HTML-escaped.
+
+def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
+    """Hugo content for the packs.nebari.dev landing: front matter + intro + table.
+
+    Rendered by nebari-hugo-theme. The dashboard site keeps goldmark unsafe=false,
+    and cells are escaped + the docs URL scheme is allowlisted, so third-party
+    pack-metadata.yaml values cannot inject markup.
     """
-    head = (
-        "<!doctype html><meta charset=utf-8>"
-        "<title>Nebari Software Packs</title>"
-        "<style>body{font-family:system-ui;max-width:60rem;margin:2rem auto;padding:0 1rem}"
-        "table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:.4rem .6rem;text-align:left}</style>"
-    )
-    intro = (
-        "<h1>Nebari Software Packs</h1>"
-        "<p>A <strong>software pack</strong> is a packaged, opinionated way to deploy a "
-        "service on a Nebari cluster - with routing, TLS, and OIDC wired in - so teams add "
-        "capabilities without re-solving the platform plumbing each time.</p>"
-        "<p>See the <a href=\"https://nebari.dev\">Nebari documentation</a>, or learn to build "
-        "one in the <a href=\"/building-a-software-pack/\">Building a software pack</a> guide.</p>"
-        "<h2>Officially supported packs</h2>"
-    )
-    header = "<tr><th>Pack</th><th>Level</th><th>Owner</th><th>Docs</th></tr>"
-
-    body_rows: list[str] = []
+    lines = [
+        "+++",
+        'title = "Nebari Software Packs"',
+        "+++",
+        "",
+        ("A **software pack** is a packaged, opinionated way to deploy a service on a "
+         "Nebari cluster - with routing, TLS, and OIDC wired in - so teams add "
+         "capabilities without re-solving the platform plumbing each time."),
+        "",
+        ("See the [Nebari documentation](https://nebari.dev), or learn to build one in "
+         "the [Building a software pack](/building-a-software-pack/) guide."),
+        "",
+        "## Officially supported packs",
+        "",
+        "| Pack | Level | Owner | Docs |",
+        "| --- | --- | --- | --- |",
+    ]
     for r in rows:
         md = r.metadata or {}
-        display = md.get("display_name") or r.repo.split("/")[-1]
-        owner = md.get("owner") or ""
+        display = _md_escape_cell(str(md.get("display_name") or r.repo.split("/")[-1]))
+        level = _md_escape_cell(_html_level_label(md.get("level")))
+        owner_raw = str(md.get("owner") or "").strip()
+        owner = _md_escape_cell(owner_raw) if owner_raw else "–"
         links = md.get("links") if isinstance(md.get("links"), dict) else {}
         docs = links.get("docs") if isinstance(links, dict) else None
-
-        display_cell = html_lib.escape(str(display))
-        level_cell = html_lib.escape(_html_level_label(md.get("level")))
-        owner_cell = html_lib.escape(str(owner)) if owner else "–"
-        # Only emit http(s) hrefs - pack-metadata.yaml comes from third-party
-        # repos, so reject javascript:/data: and other unsafe schemes.
         if isinstance(docs, str) and urllib.parse.urlparse(docs.strip()).scheme in ("http", "https"):
-            docs_cell = f'<a href="{html_lib.escape(docs.strip(), quote=True)}">docs</a>'
+            url = docs.strip().replace("(", "%28").replace(")", "%29")
+            docs_cell = f"[docs]({url})"
         else:
-            docs_cell = "–"
-
-        body_rows.append(
-            f"<tr><td>{display_cell}</td><td>{level_cell}</td>"
-            f"<td>{owner_cell}</td><td>{docs_cell}</td></tr>"
-        )
-
-    body = "".join(body_rows)
-    generated = html_lib.escape(str(generated_at))
-    return (
-        f"{head}{intro}<table>{header}{body}</table>"
-        f"<p><small>Generated {generated}</small></p>"
-    )
+            docs_cell = f"[repo](https://github.com/{r.repo})"
+        lines.append(f"| {display} | {level} | {owner} | {docs_cell} |")
+    lines += ["", f"*Generated {_md_escape_cell(str(generated_at))}*"]
+    return "\n".join(lines) + "\n"
 
 
 # ---------------------------------------------------------------------------
@@ -688,11 +678,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--dry-run", action="store_true", help="Print to stdout instead of writing the output file.")
     parser.add_argument("--workflow-url", default=None, help="URL to the refresh workflow for the regen link.")
     parser.add_argument(
-        "--html",
+        "--landing",
         nargs="?",
-        const="site/index.html",
+        const="site/content/_index.md",
         default=None,
-        help="Render the landing page HTML to PATH (default site/index.html when the flag is given with no value).",
+        help="Render the landing page Hugo content to PATH (default site/content/_index.md).",
     )
     args = parser.parse_args(argv)
 
@@ -712,12 +702,12 @@ def main(argv: list[str] | None = None) -> int:
     generated_at = datetime.now(timezone.utc)
     output = render_dashboard(rows, generated_at, workflow_url=args.workflow_url)
 
-    if args.html:
-        html_out = render_html(rows, generated_at.strftime("%Y-%m-%dT%H:%M:%SZ"))
-        html_path = Path(args.html)
-        html_path.parent.mkdir(parents=True, exist_ok=True)
-        html_path.write_text(html_out + "\n", encoding="utf-8")
-        print(f"INFO: wrote {html_path}", file=sys.stderr)
+    if args.landing:
+        landing_out = render_landing_markdown(rows, generated_at.strftime("%Y-%m-%dT%H:%M:%SZ"))
+        landing_path = Path(args.landing)
+        landing_path.parent.mkdir(parents=True, exist_ok=True)
+        landing_path.write_text(landing_out, encoding="utf-8")
+        print(f"INFO: wrote {landing_path}", file=sys.stderr)
 
     if args.dry_run:
         sys.stdout.write(output)
