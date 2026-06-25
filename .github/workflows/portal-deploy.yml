@@ -14,11 +14,18 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install -r requirements.txt
+      - uses: actions/setup-go@v5
+        with: { go-version-file: site/go.mod, cache: false }
+      - uses: peaceiris/actions-hugo@v3
+        with: { hugo-version: "0.159.0", extended: true }
 
-      - name: Render landing page
-        run: python generate.py --html site/index.html
+      - name: Render landing content
+        run: python generate.py --landing site/content/_index.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build landing (Hugo)
+        run: cd site && hugo --gc --minify --baseURL "https://packs.nebari.dev/"
 
       - name: Generate Worker routes
         run: python generate_routes.py
@@ -30,7 +37,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy site --project-name=software-pack-dashboard --branch=main
+          command: pages deploy site/public --project-name=software-pack-dashboard --branch=main
 
       - name: Deploy routing Worker
         uses: cloudflare/wrangler-action@v3
