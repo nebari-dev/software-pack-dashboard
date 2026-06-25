@@ -454,3 +454,17 @@ def test_landing_escapes_pipe_in_cell():
     rows = [_row("nebari-dev/y", "Pipe|Name", "ga", "o")]
     out = render_landing_markdown(rows, "t")
     assert "Pipe\\|Name" in out
+
+
+def test_landing_escapes_backslash_in_cell():
+    rows = [_row("nebari-dev/z", "Back\\Slash Pack", "alpha", "o")]
+    out = render_landing_markdown(rows, "t")
+    assert "Back\\\\Slash Pack" in out
+
+
+def test_landing_escapes_newline_in_cell():
+    rows = [_row("nebari-dev/w", "Multi\nLine Pack", "beta", "o")]
+    out = render_landing_markdown(rows, "t")
+    # Newline must be replaced with a space; must not break the table row
+    assert "Multi\nLine Pack" not in out
+    assert "Multi Line Pack" in out
