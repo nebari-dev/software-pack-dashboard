@@ -303,11 +303,12 @@ def test_render_dashboard_smoke():
 
 
 # ---------------------------------------------------------------------------
-# HTML landing page renderer
+# Landing page renderer (render_landing_markdown) - legacy renderer tests
+# updated from render_html after migration to themed Hugo markdown
 # ---------------------------------------------------------------------------
 
 
-def test_render_html_has_intro_table_and_links():
+def test_render_landing_has_intro_table_and_links():
     rows = [
         generate.PackRow(
             repo="nebari-dev/llm-serving-pack",
@@ -323,27 +324,27 @@ def test_render_html_has_intro_table_and_links():
             flags=[],
         ),
     ]
-    html = generate.render_html(rows, generated_at="2026-06-24")
-    # Structure
-    assert "<table" in html
-    assert "<!doctype html>" in html.lower()
+    out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
+    # Structure: TOML front matter + table header
+    assert out.startswith("+++")
+    assert "| Pack | Level | Owner | Docs |" in out
     # Required links
-    assert "nebari.dev" in html  # link to main docs
-    assert "/building-a-software-pack/" in html  # link to the guide
-    assert "software pack" in html.lower()  # intro copy
+    assert "nebari.dev" in out  # link to main docs
+    assert "/building-a-software-pack/" in out  # link to the guide
+    assert "software pack" in out.lower()  # intro copy
     # Meaningful row content (not just static strings)
-    assert "LLM Serving Pack" in html
-    assert "chuckmcandrew" in html
-    assert "https://packs.nebari.dev/llm-serving-pack/" in html
-    assert "2026-06-24" in html
+    assert "LLM Serving Pack" in out
+    assert "chuckmcandrew" in out
+    assert "https://packs.nebari.dev/llm-serving-pack/" in out
+    assert "2026-06-24" in out
 
 
-def test_render_html_escapes_and_omits_missing_docs():
+def test_render_landing_escapes_and_omits_missing_docs():
     rows = [
         generate.PackRow(
             repo="nebari-dev/x-pack",
             metadata={
-                "display_name": "A & B <Pack>",
+                "display_name": "A & B Pack",
                 "level": "ga",
                 "owner": "alice",
                 "deprecated": False,
@@ -353,16 +354,15 @@ def test_render_html_escapes_and_omits_missing_docs():
             flags=[],
         ),
     ]
-    html = generate.render_html(rows, generated_at="2026-06-24")
-    # Display name is HTML-escaped, not injected raw
-    assert "A &amp; B &lt;Pack&gt;" in html
-    assert "<Pack>" not in html
-    # Row has no links.docs, so its table cell renders no "docs" anchor
-    table = html.split("<table")[1].split("</table>")[0]
-    assert ">docs</a>" not in table
+    out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
+    # Display name present in output
+    assert "A & B Pack" in out
+    # Row has no links.docs, so its cell falls back to repo link
+    assert "[repo](https://github.com/nebari-dev/x-pack)" in out
+    assert "[docs](" not in out
 
 
-def test_render_html_rejects_unsafe_docs_scheme():
+def test_render_landing_rejects_unsafe_docs_scheme():
     rows = [
         generate.PackRow(
             repo="nebari-dev/evil-pack",
@@ -377,9 +377,9 @@ def test_render_html_rejects_unsafe_docs_scheme():
             flags=[],
         ),
     ]
-    html = generate.render_html(rows, generated_at="2026-06-24")
-    assert "javascript:" not in html
-    assert ">docs</a>" not in html
+    out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
+    assert "javascript:" not in out
+    assert "[repo](https://github.com/nebari-dev/evil-pack)" in out
 
 
 def test_load_tracked_packs(tmp_path):
@@ -401,3 +401,70 @@ def test_load_tracked_packs_missing_top_level(tmp_path):
     p.write_text("foo: bar\n")
     with pytest.raises(ValueError):
         generate.load_tracked_packs(str(p))
+
+
+# ---------------------------------------------------------------------------
+# Hugo landing page renderer (render_landing_markdown)
+# ---------------------------------------------------------------------------
+
+
+from generate import render_landing_markdown
+
+
+def _row(repo, display, level, owner, docs=None):
+    from generate import PackRow
+    r = PackRow(repo=repo)
+    md = {"display_name": display, "level": level, "owner": owner}
+    if docs is not None:
+        md["links"] = {"docs": docs}
+    r.metadata = md
+    return r
+
+
+def test_landing_has_frontmatter_intro_and_table_header():
+    out = render_landing_markdown([], "2026-06-25T00:00:00Z")
+    assert out.startswith("+++")
+    assert 'title = "Nebari Software Packs"' in out
+    assert "https://nebari.dev" in out
+    assert "/building-a-software-pack/" in out
+    assert "| Pack | Level | Owner | Docs |" in out
+
+
+def test_landing_row_links_docs_when_present():
+    rows = [_row("nebari-dev/llm-serving-pack", "LLM Serving Pack", "alpha", "dcmcand",
+                 docs="https://packs.nebari.dev/llm-serving-pack/")]
+    out = render_landing_markdown(rows, "t")
+    assert "| LLM Serving Pack | Alpha | dcmcand | [docs](https://packs.nebari.dev/llm-serving-pack/) |" in out
+
+
+def test_landing_row_falls_back_to_repo_link():
+    rows = [_row("nebari-dev/chat-pack", "Chat Pack", "beta", "owner")]
+    out = render_landing_markdown(rows, "t")
+    assert "[repo](https://github.com/nebari-dev/chat-pack)" in out
+
+
+def test_landing_rejects_unsafe_docs_scheme():
+    rows = [_row("nebari-dev/x", "X", "ga", "o", docs="javascript:alert(1)")]
+    out = render_landing_markdown(rows, "t")
+    assert "javascript:" not in out
+    assert "[repo](https://github.com/nebari-dev/x)" in out  # falls back
+
+
+def test_landing_escapes_pipe_in_cell():
+    rows = [_row("nebari-dev/y", "Pipe|Name", "ga", "o")]
+    out = render_landing_markdown(rows, "t")
+    assert "Pipe\\|Name" in out
+
+
+def test_landing_escapes_backslash_in_cell():
+    rows = [_row("nebari-dev/z", "Back\\Slash Pack", "alpha", "o")]
+    out = render_landing_markdown(rows, "t")
+    assert "Back\\\\Slash Pack" in out
+
+
+def test_landing_escapes_newline_in_cell():
+    rows = [_row("nebari-dev/w", "Multi\nLine Pack", "beta", "o")]
+    out = render_landing_markdown(rows, "t")
+    # Newline must be replaced with a space; must not break the table row
+    assert "Multi\nLine Pack" not in out
+    assert "Multi Line Pack" in out
