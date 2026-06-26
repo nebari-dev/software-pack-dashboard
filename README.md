@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-06-26T13:07:10Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-06-26T16:11:38Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -13,7 +13,7 @@ _Last regenerated: 2026-06-26T13:07:10Z. Trigger a refresh via the `Refresh pack
 
 | Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-data-science-pack' does not match repo name 'data-science-pack' |
+| [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0 (Jun 19) | Jun 26 | ⚠️ metadata-invalid | name 'nebari-data-science-pack' does not match repo name 'data-science-pack' |
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jun 25 | ⚠️ metadata-invalid | name 'nebari-llm-serving-pack' does not match repo name 'llm-serving-pack' |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Experimental | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.13 (Jun 18) | Jun 23 | ⚠️ metadata-invalid | name 'nebari-chat-pack' does not match repo name 'chat-pack' |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi deployment pack for Nebari | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.0 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-nebi-pack' does not match repo name 'nebi-pack' |
@@ -24,7 +24,7 @@ _Last regenerated: 2026-06-26T13:07:10Z. Trigger a refresh via the `Refresh pack
 | [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | A Nebari software pack that deploys MLflow with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-mlflow-pack' does not match repo name 'mlflow-pack' |
 | [data-engineering-pack](https://github.com/nebari-dev/data-engineering-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
 | [external-auth-pack](https://github.com/nebari-dev/external-auth-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jun 17 | ⚠️ metadata-invalid | name 'nebari-longhorn-backup-pack' does not match repo name 'longhorn-backup-pack' |
+| [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jun 26 | ⚠️ metadata-invalid | name 'nebari-longhorn-backup-pack' does not match repo name 'longhorn-backup-pack' |
 | [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-provenance-collector-pack' does not match repo name 'provenance-collector-pack' |
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | May 19 | ⚠️ metadata-invalid | name 'nebari-pi-coding-agent-pack' does not match repo name 'pi-coding-agent-pack' |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
@@ -63,4 +63,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-06-26T13:07:10Z_
+_Generated: 2026-06-26T16:11:38Z_
