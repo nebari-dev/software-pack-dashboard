@@ -16,3 +16,4 @@ site/content/_index.md
 site/node_modules/
 site/dist/
 site/.astro/
+site/src/content/docs/index.md

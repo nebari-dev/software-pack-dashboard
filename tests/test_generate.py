@@ -407,7 +407,7 @@ def test_load_tracked_packs_missing_top_level(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# Hugo landing page renderer (render_landing_markdown)
+# Starlight landing page renderer (render_landing_markdown)
 # ---------------------------------------------------------------------------
 
 
