@@ -31,7 +31,6 @@ def test_build_routes_includes_only_docs_site_true():
 
 def test_build_search_indexes_only_docs_packs():
     from generate_routes import build_search_indexes
-    import json
     extras = {"building-a-software-pack": "https://template.pages.dev"}
     routes = {
         "__default__": "https://dash.pages.dev",

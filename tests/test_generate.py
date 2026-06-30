@@ -411,11 +411,10 @@ def test_load_tracked_packs_missing_top_level(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-from generate import render_landing_markdown
+from generate import render_landing_markdown, PackRow
 
 
 def _row(repo, display, level, owner, docs=None):
-    from generate import PackRow
     r = PackRow(repo=repo)
     md = {"display_name": display, "level": level, "owner": owner}
     if docs is not None:
@@ -480,7 +479,6 @@ def test_landing_escapes_newline_in_cell():
 
 
 def test_render_landing_emits_starlight_splash_frontmatter():
-    from generate import render_landing_markdown, PackRow
     rows = [PackRow(repo="nebari-dev/demo-pack", metadata={"display_name": "Demo Pack", "level": "beta", "owner": "alice"})]
     out = render_landing_markdown(rows, "2026-06-30T00:00:00Z")
     # Starlight YAML front matter (not Hugo +++), splash template.
@@ -496,7 +494,6 @@ def test_render_landing_emits_starlight_splash_frontmatter():
 
 def test_render_landing_html_escapes_display_name_and_owner():
     """Regression: display_name and owner with HTML special chars must be escaped."""
-    from generate import render_landing_markdown, PackRow
     rows = [PackRow(
         repo="nebari-dev/evil-pack",
         metadata={
