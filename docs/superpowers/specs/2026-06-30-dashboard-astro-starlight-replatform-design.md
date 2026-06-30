@@ -83,11 +83,12 @@ unified search. Explicitly NOT in scope:
   (YAML front matter + `template: splash`) at the new path; it also emits the
   generated list of docs-enabled pack slugs for the search integration (a small
   JSON file the Astro app imports). The `README.md` rendering is unchanged.
-- A **search integration** in the Astro app that initializes Pagefind with
-  `mergeIndex` for each generated pack slug. The exact injection point (a
-  Starlight `Search` component override vs. a Pagefind-init client script added
-  via Starlight config) is confirmed against the Starlight site-search +
-  Pagefind multisite docs during planning.
+- **Search wiring is config-only.** Starlight's `pagefind` config natively
+  accepts `mergeIndex: Array<{ bundlePath: string; ... }>`. `astro.config.mjs`
+  imports the generated bundle-path list and sets
+  `pagefind: { mergeIndex }`. No `Search` component override is needed. An empty
+  array (today's zero-pack case) gracefully searches only the dashboard's own
+  index.
 - `.github/workflows/portal-deploy.yml`: replace the Hugo build with
   `bun install && bun run build` (Astro); change the Pages deploy directory from
   `site/public` to the Astro output (`site/dist`). The `generate.py --landing`
@@ -126,11 +127,11 @@ outward-facing action and will be confirmed before it is run.
 
 ## Risks and open questions
 
-- **Starlight search mergeIndex injection point.** Pagefind supports
-  `mergeIndex` at runtime, and Starlight uses Pagefind by default, but the clean
-  way to inject `mergeIndex` into Starlight's search UI (component override vs.
-  init script) must be confirmed against current docs during planning. Fallback:
-  a custom Pagefind UI initialization on the landing page.
+- **Starlight search mergeIndex injection point. RESOLVED:** Starlight's
+  `pagefind` config option natively supports `mergeIndex` (an array of
+  `{ bundlePath, indexWeight?, basePath?, baseUrl?, mergeFilter?, language?,
+  ranking? }`). The dashboard sets `pagefind: { mergeIndex }` in
+  `astro.config.mjs` from the generated bundle-path list. No component override.
 - **Tarball to npm swap.** When `@nebari/starlight` is published to npm, the
   dependency changes from the tarball URL to a semver range. Low-risk, one-line.
 - **`@nebari` npm name** is still pending the `nebari` npm org being claimed (the
