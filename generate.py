@@ -590,17 +590,30 @@ def _md_escape_cell(value: str) -> str:
     return value.replace("\\", "\\\\").replace("|", "\\|").replace("\n", " ").strip()
 
 
-def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
-    """Hugo content for the packs.nebari.dev landing: front matter + intro + table.
+def _html_escape_text(value: str) -> str:
+    """HTML-escape free-form text for safe rendering in Astro markdown.
 
-    Rendered by nebari-hugo-theme. The dashboard site keeps goldmark unsafe=false,
-    and cells are escaped + the docs URL scheme is allowlisted, so third-party
-    pack-metadata.yaml values cannot inject markup.
+    Astro renders raw HTML by default, so untrusted values from pack-metadata.yaml
+    (display_name, owner) must have <, >, and & escaped to prevent injection.
+    Only used in the landing render path; the shared _md_escape_cell is not changed.
+    """
+    return value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
+    """Starlight splash content for the packs.nebari.dev landing: front matter + intro + table.
+
+    Rendered by Astro Starlight. Astro renders raw HTML by default, so free-form
+    text cells (display_name, owner) are HTML-escaped to prevent injection from
+    third-party pack-metadata.yaml values. The docs URL scheme is allowlisted and
+    the level cell comes from a fixed allowlist, so only display_name and owner
+    need the HTML escape treatment.
     """
     lines = [
-        "+++",
-        'title = "Nebari Software Packs"',
-        "+++",
+        "---",
+        "title: Nebari Software Packs",
+        "template: splash",
+        "---",
         "",
         ("A **software pack** is a packaged, opinionated way to deploy a service on a "
          "Nebari cluster - with routing, TLS, and OIDC wired in - so teams add "
@@ -616,10 +629,11 @@ def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
     ]
     for r in rows:
         md = r.metadata or {}
-        display = _md_escape_cell(str(md.get("display_name") or r.repo.split("/")[-1]))
+        display_raw = str(md.get("display_name") or r.repo.split("/")[-1])
+        display = _md_escape_cell(_html_escape_text(display_raw))
         level = _md_escape_cell(_html_level_label(md.get("level")))
         owner_raw = str(md.get("owner") or "").strip()
-        owner = _md_escape_cell(owner_raw) if owner_raw else "–"
+        owner = _md_escape_cell(_html_escape_text(owner_raw)) if owner_raw else "–"
         links = md.get("links") if isinstance(md.get("links"), dict) else {}
         docs = links.get("docs") if isinstance(links, dict) else None
         if isinstance(docs, str) and urllib.parse.urlparse(docs.strip()).scheme in ("http", "https"):
@@ -680,9 +694,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--landing",
         nargs="?",
-        const="site/content/_index.md",
+        const="site/src/content/docs/index.md",
         default=None,
-        help="Render the landing page Hugo content to PATH (default site/content/_index.md).",
+        help="Render the landing page Starlight content to PATH (default site/src/content/docs/index.md).",
     )
     args = parser.parse_args(argv)
 

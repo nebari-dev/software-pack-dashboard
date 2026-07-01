@@ -27,3 +27,15 @@ def test_build_routes_includes_only_docs_site_true():
     assert routes["building-a-software-pack"] == "https://nebari-software-pack-template.pages.dev"
     assert "chat-pack" not in routes
     assert "nebi-pack" not in routes
+
+
+def test_build_search_indexes_only_docs_packs():
+    from generate_routes import build_search_indexes
+    extras = {"building-a-software-pack": "https://template.pages.dev"}
+    routes = {
+        "__default__": "https://dash.pages.dev",
+        "superset-pack": "https://superset-pack.pages.dev",
+        "building-a-software-pack": "https://template.pages.dev",
+    }
+    idx = build_search_indexes(routes, extras)
+    assert idx == ["/superset-pack/pagefind/"]  # docs pack only; not __default__, not extras

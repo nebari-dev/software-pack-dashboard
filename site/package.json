@@ -1,0 +1,15 @@
+{
+  "name": "software-pack-dashboard-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.33.0",
+    "@nebari/starlight": "https://github.com/nebari-dev/starlight/releases/download/v0.1.1/nebari-starlight-0.1.1.tgz",
+    "astro": "^5.0.0"
+  }
+}

@@ -325,8 +325,9 @@ def test_render_landing_has_intro_table_and_links():
         ),
     ]
     out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
-    # Structure: TOML front matter + table header
-    assert out.startswith("+++")
+    # Structure: YAML front matter (Starlight) + table header
+    assert out.startswith("---\n")
+    assert "template: splash" in out
     assert "| Pack | Level | Owner | Docs |" in out
     # Required links
     assert "nebari.dev" in out  # link to main docs
@@ -355,8 +356,10 @@ def test_render_landing_escapes_and_omits_missing_docs():
         ),
     ]
     out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
-    # Display name present in output
-    assert "A & B Pack" in out
+    # Display name is HTML-escaped: & becomes &amp;
+    assert "A &amp; B Pack" in out
+    # Raw & must not appear in the cell (it was escaped)
+    assert "A & B Pack" not in out
     # Row has no links.docs, so its cell falls back to repo link
     assert "[repo](https://github.com/nebari-dev/x-pack)" in out
     assert "[docs](" not in out
@@ -404,15 +407,14 @@ def test_load_tracked_packs_missing_top_level(tmp_path):
 
 
 # ---------------------------------------------------------------------------
-# Hugo landing page renderer (render_landing_markdown)
+# Starlight landing page renderer (render_landing_markdown)
 # ---------------------------------------------------------------------------
 
 
-from generate import render_landing_markdown
+from generate import render_landing_markdown, PackRow
 
 
 def _row(repo, display, level, owner, docs=None):
-    from generate import PackRow
     r = PackRow(repo=repo)
     md = {"display_name": display, "level": level, "owner": owner}
     if docs is not None:
@@ -423,8 +425,9 @@ def _row(repo, display, level, owner, docs=None):
 
 def test_landing_has_frontmatter_intro_and_table_header():
     out = render_landing_markdown([], "2026-06-25T00:00:00Z")
-    assert out.startswith("+++")
-    assert 'title = "Nebari Software Packs"' in out
+    assert out.startswith("---\n")
+    assert "title: Nebari Software Packs" in out
+    assert "template: splash" in out
     assert "https://nebari.dev" in out
     assert "/building-a-software-pack/" in out
     assert "| Pack | Level | Owner | Docs |" in out
@@ -468,3 +471,42 @@ def test_landing_escapes_newline_in_cell():
     # Newline must be replaced with a space; must not break the table row
     assert "Multi\nLine Pack" not in out
     assert "Multi Line Pack" in out
+
+
+# ---------------------------------------------------------------------------
+# Task 2: Starlight splash front matter + HTML injection escaping
+# ---------------------------------------------------------------------------
+
+
+def test_render_landing_emits_starlight_splash_frontmatter():
+    rows = [PackRow(repo="nebari-dev/demo-pack", metadata={"display_name": "Demo Pack", "level": "beta", "owner": "alice"})]
+    out = render_landing_markdown(rows, "2026-06-30T00:00:00Z")
+    # Starlight YAML front matter (not Hugo +++), splash template.
+    assert out.startswith("---\n")
+    assert "title: Nebari Software Packs" in out
+    assert "template: splash" in out
+    assert "+++" not in out
+    # Same content surface: intro + table + a row for the pack.
+    assert "## Officially supported packs" in out
+    assert "| Pack | Level | Owner | Docs |" in out
+    assert "Demo Pack" in out
+
+
+def test_render_landing_html_escapes_display_name_and_owner():
+    """Regression: display_name and owner with HTML special chars must be escaped."""
+    rows = [PackRow(
+        repo="nebari-dev/evil-pack",
+        metadata={
+            "display_name": "Foo <script> & Bar",
+            "level": "alpha",
+            "owner": "bob<evil>",
+        },
+    )]
+    out = render_landing_markdown(rows, "2026-06-30T00:00:00Z")
+    # Raw angle brackets and ampersands must not appear in display_name or owner cells
+    assert "<script>" not in out
+    assert "<evil>" not in out
+    # Escaped forms must be present instead
+    assert "&lt;script&gt;" in out
+    assert "&amp;" in out
+    assert "&lt;evil&gt;" in out

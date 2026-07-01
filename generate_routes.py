@@ -31,6 +31,17 @@ def fetch_metadata(repo: str) -> dict:
         raise
 
 
+def build_search_indexes(routes: dict, extras: dict) -> list[str]:
+    """Bundle paths for packs that publish their own Pagefind index.
+
+    A docs-enabled pack has a `<slug> -> https://<slug>.pages.dev` route; we
+    exclude __default__ (the dashboard) and the static extra-routes (which are
+    not Starlight packs with a Pagefind bundle).
+    """
+    skip = {"__default__", *extras.keys()}
+    return [f"/{slug}/pagefind/" for slug in routes if slug not in skip]
+
+
 def build_routes(packs, fetch, extras, default_host):
     routes = {"__default__": default_host}
     for repo in packs:
@@ -52,6 +63,11 @@ def main():
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(routes, indent=2) + "\n")
     print(f"wrote {out} ({len(routes) - 1} docs routes)", file=sys.stderr)
+    search_indexes = build_search_indexes(routes, extras)
+    idx_out = root / "site" / "src" / "generated" / "search-indexes.json"
+    idx_out.parent.mkdir(parents=True, exist_ok=True)
+    idx_out.write_text(json.dumps(search_indexes, indent=2) + "\n")
+    print(f"wrote {idx_out} ({len(search_indexes)} search indexes)", file=sys.stderr)
 
 
 if __name__ == "__main__":
