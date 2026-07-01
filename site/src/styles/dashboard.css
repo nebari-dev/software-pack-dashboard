@@ -1,0 +1,79 @@
+/* Dashboard landing styling: hero + color-coded pack catalog.
+ * Layered on @nebari/starlight. Uses the theme's --nbr-* palette tokens and
+ * Starlight's --sl-* variables so it stays on-brand and theme-aware. */
+
+/* Center and constrain the splash content so it is not stranded on wide screens. */
+.sl-markdown-content {
+  max-width: 62rem;
+  margin-inline: auto;
+}
+
+/* Hero intro reads as a lead paragraph, not body copy. */
+.sl-markdown-content > p:first-of-type {
+  font-size: var(--sl-text-lg);
+  color: var(--sl-color-gray-2);
+  max-width: 46rem;
+}
+
+/* Pack catalog: a responsive grid that fills the page width. */
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+.pack-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.85rem;
+  background: var(--sl-color-bg);
+  color: var(--sl-color-text);
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pack-card:hover,
+.pack-card:focus-visible {
+  border-color: var(--sl-color-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px -10px color-mix(in oklab, var(--nbr-primary), transparent 65%);
+}
+
+.pack-card__name {
+  font-family: var(--nbr-font-heading, var(--sl-font));
+  font-weight: 600;
+  font-size: var(--sl-text-lg);
+  line-height: 1.2;
+  color: var(--sl-color-white);
+}
+.pack-card__owner {
+  font-size: var(--sl-text-xs);
+  color: var(--sl-color-gray-3);
+}
+
+/* Maturity badge - the color encodes maturity, drawn from the Nebari palette.
+ * Solid pills with white text keep contrast high in both light and dark themes. */
+.pack-card__level {
+  align-self: flex-start;
+  font-size: var(--sl-text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 0.12rem 0.55rem;
+  border-radius: 1rem;
+  color: #fff;
+  background: var(--nbr-zinc-600);
+}
+.pack-card[data-level='ga'] .pack-card__level { background: var(--nbr-green-700); }
+.pack-card[data-level='beta'] .pack-card__level { background: var(--nbr-accent-teal-700); }
+.pack-card[data-level='alpha'] .pack-card__level { background: var(--nbr-highlight-yellow-800); }
+.pack-card[data-level='experimental'] .pack-card__level { background: var(--nbr-zinc-600); }
+.pack-card[data-level='none'] .pack-card__level {
+  background: transparent;
+  color: var(--sl-color-gray-3);
+  border: 1px solid var(--sl-color-gray-5);
+}

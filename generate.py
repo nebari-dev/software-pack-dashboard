@@ -601,14 +601,18 @@ def _html_escape_text(value: str) -> str:
 
 
 def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
-    """Starlight splash content for the packs.nebari.dev landing: front matter + intro + table.
+    """Starlight splash content for packs.nebari.dev: hero + a color-coded pack catalog.
 
-    Rendered by Astro Starlight. Astro renders raw HTML by default, so free-form
-    text cells (display_name, owner) are HTML-escaped to prevent injection from
-    third-party pack-metadata.yaml values. The docs URL scheme is allowlisted and
-    the level cell comes from a fixed allowlist, so only display_name and owner
-    need the HTML escape treatment.
+    Emits a raw-HTML card grid (Astro renders raw HTML). Free-form values
+    (display_name, owner) are HTML-escaped; the docs URL scheme is allowlisted and
+    escaped for HTML attribute context; the maturity level comes from a fixed
+    allowlist and drives a `data-level` attribute for CSS badge coloring. Styled by
+    the dashboard's src/styles/dashboard.css.
     """
+    def attr(value: str) -> str:
+        """Escape a value for use inside an HTML double-quoted attribute."""
+        return value.replace("&", "&amp;").replace('"', "&quot;")
+
     lines = [
         "---",
         "title: Nebari Software Packs",
@@ -624,25 +628,29 @@ def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
         "",
         "## Officially supported packs",
         "",
-        "| Pack | Level | Owner | Docs |",
-        "| --- | --- | --- | --- |",
+        '<div class="pack-grid">',
     ]
     for r in rows:
         md = r.metadata or {}
-        display_raw = str(md.get("display_name") or r.repo.split("/")[-1])
-        display = _md_escape_cell(_html_escape_text(display_raw))
-        level = _md_escape_cell(_html_level_label(md.get("level")))
+        display = _html_escape_text(str(md.get("display_name") or r.repo.split("/")[-1]))
+        level_raw = md.get("level")
+        level_key = level_raw if isinstance(level_raw, str) and level_raw in LEVELS else "none"
+        level_label = _html_level_label(level_raw)
         owner_raw = str(md.get("owner") or "").strip()
-        owner = _md_escape_cell(_html_escape_text(owner_raw)) if owner_raw else "–"
+        owner = f"@{_html_escape_text(owner_raw)}" if owner_raw else "unassigned"
         links = md.get("links") if isinstance(md.get("links"), dict) else {}
         docs = links.get("docs") if isinstance(links, dict) else None
         if isinstance(docs, str) and urllib.parse.urlparse(docs.strip()).scheme in ("http", "https"):
-            url = docs.strip().replace("(", "%28").replace(")", "%29")
-            docs_cell = f"[docs]({url})"
+            href = attr(docs.strip())
         else:
-            docs_cell = f"[repo](https://github.com/{r.repo})"
-        lines.append(f"| {display} | {level} | {owner} | {docs_cell} |")
-    lines += ["", f"*Generated {_md_escape_cell(str(generated_at))}*"]
+            href = attr(f"https://github.com/{r.repo}")
+        lines.append(f'<a class="pack-card" data-level="{level_key}" href="{href}">')
+        lines.append(f'<span class="pack-card__level">{level_label}</span>')
+        lines.append(f'<span class="pack-card__name">{display}</span>')
+        lines.append(f'<span class="pack-card__owner">{owner}</span>')
+        lines.append("</a>")
+    lines.append("</div>")
+    lines += ["", f"*Generated {_html_escape_text(str(generated_at))}*"]
     return "\n".join(lines) + "\n"
 
 
