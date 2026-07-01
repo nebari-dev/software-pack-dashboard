@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.33.0",
-    "@nebari/starlight": "^0.1.4",
+    "@nebari/starlight": "^0.1.5",
     "astro": "^5.0.0"
   }
 }
