@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.33.0",
-    "@nebari/starlight": "https://github.com/nebari-dev/starlight/releases/download/v0.1.1/nebari-starlight-0.1.1.tgz",
+    "@nebari/starlight": "^0.1.3",
     "astro": "^5.0.0"
   }
 }
