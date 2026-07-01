@@ -308,7 +308,7 @@ def test_render_dashboard_smoke():
 # ---------------------------------------------------------------------------
 
 
-def test_render_landing_has_intro_table_and_links():
+def test_render_landing_has_intro_links_and_catalog():
     rows = [
         generate.PackRow(
             repo="nebari-dev/llm-serving-pack",
@@ -325,22 +325,24 @@ def test_render_landing_has_intro_table_and_links():
         ),
     ]
     out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
-    # Structure: YAML front matter (Starlight) + table header
+    # Starlight splash front matter + a card catalog (not a markdown table)
     assert out.startswith("---\n")
     assert "template: splash" in out
-    assert "| Pack | Level | Owner | Docs |" in out
-    # Required links
-    assert "nebari.dev" in out  # link to main docs
-    assert "/building-a-software-pack/" in out  # link to the guide
-    assert "software pack" in out.lower()  # intro copy
-    # Meaningful row content (not just static strings)
-    assert "LLM Serving Pack" in out
-    assert "chuckmcandrew" in out
-    assert "https://packs.nebari.dev/llm-serving-pack/" in out
+    assert '<div class="pack-grid">' in out
+    assert 'class="pack-card"' in out
+    # Required links + intro copy
+    assert "nebari.dev" in out
+    assert "/building-a-software-pack/" in out
+    assert "software pack" in out.lower()
+    # Card content: name, owner, maturity level, docs href
+    assert '<span class="pack-card__name">LLM Serving Pack</span>' in out
+    assert "@chuckmcandrew" in out
+    assert 'data-level="alpha"' in out
+    assert 'href="https://packs.nebari.dev/llm-serving-pack/"' in out
     assert "2026-06-24" in out
 
 
-def test_render_landing_escapes_and_omits_missing_docs():
+def test_render_landing_escapes_name_and_falls_back_to_repo():
     rows = [
         generate.PackRow(
             repo="nebari-dev/x-pack",
@@ -358,11 +360,9 @@ def test_render_landing_escapes_and_omits_missing_docs():
     out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
     # Display name is HTML-escaped: & becomes &amp;
     assert "A &amp; B Pack" in out
-    # Raw & must not appear in the cell (it was escaped)
     assert "A & B Pack" not in out
-    # Row has no links.docs, so its cell falls back to repo link
-    assert "[repo](https://github.com/nebari-dev/x-pack)" in out
-    assert "[docs](" not in out
+    # No links.docs, so the card links to the repo
+    assert 'href="https://github.com/nebari-dev/x-pack"' in out
 
 
 def test_render_landing_rejects_unsafe_docs_scheme():
@@ -382,7 +382,7 @@ def test_render_landing_rejects_unsafe_docs_scheme():
     ]
     out = generate.render_landing_markdown(rows, generated_at="2026-06-24")
     assert "javascript:" not in out
-    assert "[repo](https://github.com/nebari-dev/evil-pack)" in out
+    assert 'href="https://github.com/nebari-dev/evil-pack"' in out
 
 
 def test_load_tracked_packs(tmp_path):
@@ -423,62 +423,67 @@ def _row(repo, display, level, owner, docs=None):
     return r
 
 
-def test_landing_has_frontmatter_intro_and_table_header():
+def test_landing_frontmatter_intro_and_catalog():
     out = render_landing_markdown([], "2026-06-25T00:00:00Z")
     assert out.startswith("---\n")
     assert "title: Nebari Software Packs" in out
     assert "template: splash" in out
     assert "https://nebari.dev" in out
     assert "/building-a-software-pack/" in out
-    assert "| Pack | Level | Owner | Docs |" in out
+    assert '<div class="pack-grid">' in out
 
 
-def test_landing_row_links_docs_when_present():
+def test_landing_card_links_docs_when_present():
     rows = [_row("nebari-dev/llm-serving-pack", "LLM Serving Pack", "alpha", "dcmcand",
                  docs="https://packs.nebari.dev/llm-serving-pack/")]
     out = render_landing_markdown(rows, "t")
-    assert "| LLM Serving Pack | Alpha | dcmcand | [docs](https://packs.nebari.dev/llm-serving-pack/) |" in out
+    assert 'href="https://packs.nebari.dev/llm-serving-pack/"' in out
+    assert '<span class="pack-card__name">LLM Serving Pack</span>' in out
+    assert 'data-level="alpha"' in out
+    assert "@dcmcand" in out
 
 
-def test_landing_row_falls_back_to_repo_link():
+def test_landing_card_falls_back_to_repo_link():
     rows = [_row("nebari-dev/chat-pack", "Chat Pack", "beta", "owner")]
     out = render_landing_markdown(rows, "t")
-    assert "[repo](https://github.com/nebari-dev/chat-pack)" in out
+    assert 'href="https://github.com/nebari-dev/chat-pack"' in out
+    assert 'data-level="beta"' in out
 
 
-def test_landing_rejects_unsafe_docs_scheme():
+def test_landing_rejects_unsafe_docs_scheme_card():
     rows = [_row("nebari-dev/x", "X", "ga", "o", docs="javascript:alert(1)")]
     out = render_landing_markdown(rows, "t")
     assert "javascript:" not in out
-    assert "[repo](https://github.com/nebari-dev/x)" in out  # falls back
+    assert 'href="https://github.com/nebari-dev/x"' in out
 
 
-def test_landing_escapes_pipe_in_cell():
-    rows = [_row("nebari-dev/y", "Pipe|Name", "ga", "o")]
+def test_landing_unknown_level_maps_to_none():
+    rows = [_row("nebari-dev/p", "P", None, "o")]
     out = render_landing_markdown(rows, "t")
-    assert "Pipe\\|Name" in out
+    assert 'data-level="none"' in out
 
 
-def test_landing_escapes_backslash_in_cell():
-    rows = [_row("nebari-dev/z", "Back\\Slash Pack", "alpha", "o")]
+def test_landing_missing_owner_shows_unassigned():
+    r = PackRow(repo="nebari-dev/q")
+    r.metadata = {"display_name": "Q", "level": "ga"}
+    out = render_landing_markdown([r], "t")
+    assert "unassigned" in out
+
+
+def test_landing_href_escapes_double_quote():
+    # A docs URL containing a double quote must not break out of the href attribute.
+    rows = [_row("nebari-dev/r", "R", "ga", "o", docs='https://x.dev/"onmouseover=alert(1)')]
     out = render_landing_markdown(rows, "t")
-    assert "Back\\\\Slash Pack" in out
-
-
-def test_landing_escapes_newline_in_cell():
-    rows = [_row("nebari-dev/w", "Multi\nLine Pack", "beta", "o")]
-    out = render_landing_markdown(rows, "t")
-    # Newline must be replaced with a space; must not break the table row
-    assert "Multi\nLine Pack" not in out
-    assert "Multi Line Pack" in out
+    assert '"onmouseover=alert(1)' not in out
+    assert "&quot;onmouseover=alert(1)" in out
 
 
 # ---------------------------------------------------------------------------
-# Task 2: Starlight splash front matter + HTML injection escaping
+# Starlight splash front matter + HTML injection escaping
 # ---------------------------------------------------------------------------
 
 
-def test_render_landing_emits_starlight_splash_frontmatter():
+def test_render_landing_emits_starlight_splash_catalog():
     rows = [PackRow(repo="nebari-dev/demo-pack", metadata={"display_name": "Demo Pack", "level": "beta", "owner": "alice"})]
     out = render_landing_markdown(rows, "2026-06-30T00:00:00Z")
     # Starlight YAML front matter (not Hugo +++), splash template.
@@ -486,10 +491,10 @@ def test_render_landing_emits_starlight_splash_frontmatter():
     assert "title: Nebari Software Packs" in out
     assert "template: splash" in out
     assert "+++" not in out
-    # Same content surface: intro + table + a row for the pack.
+    # Card catalog with a row for the pack.
     assert "## Officially supported packs" in out
-    assert "| Pack | Level | Owner | Docs |" in out
-    assert "Demo Pack" in out
+    assert '<div class="pack-grid">' in out
+    assert '<span class="pack-card__name">Demo Pack</span>' in out
 
 
 def test_render_landing_html_escapes_display_name_and_owner():

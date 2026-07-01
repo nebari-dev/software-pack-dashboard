@@ -17,3 +17,5 @@ site/node_modules/
 site/dist/
 site/.astro/
 site/src/content/docs/index.md
+site/test-results/
+site/playwright-report/

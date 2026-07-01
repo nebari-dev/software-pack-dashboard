@@ -9,6 +9,9 @@ export default defineConfig({
     starlight({
       title: 'Nebari Software Packs',
       plugins: [nebari()],
+      // Dashboard-specific styling (hero + pack catalog). Loads after the
+      // @nebari/starlight theme CSS so it can build on the brand tokens.
+      customCss: ['./src/styles/dashboard.css'],
       // Unified multisite search: merge each pack's same-origin Pagefind bundle.
       // searchIndexes is [] until packs adopt Starlight (sub-project C).
       pagefind: { mergeIndex: searchIndexes.map((bundlePath) => ({ bundlePath })) },
