@@ -19,3 +19,4 @@ packs:
   - repo: nebari-dev/pi-coding-agent-pack
   - repo: nebari-dev/skillsctl
   - repo: nebari-dev/langfuse-pack
+  - repo: nebari-dev/nebari-frames
