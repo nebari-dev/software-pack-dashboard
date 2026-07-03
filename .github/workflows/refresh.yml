@@ -13,6 +13,12 @@ on:
       - 'schema/**'
       - '.github/workflows/refresh.yml'
 
+# Queue rather than cancel: a refresh may be mid commit-and-push, and two
+# concurrent runs race on pushing to main (the loser fails on non-fast-forward).
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
 permissions:
   contents: write
   actions: write
