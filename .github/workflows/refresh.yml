@@ -8,12 +8,14 @@ on:
     branches: [main]
     paths:
       - 'generate.py'
+      - 'generate_routes.py'
       - 'tracked-packs.yaml'
       - 'schema/**'
       - '.github/workflows/refresh.yml'
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   refresh:
@@ -30,14 +32,30 @@ jobs:
           # nebari-dev pack repos; the default workflow token cannot see
           # private packs. Falls back for forks/local checks.
           GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
+      - run: python generate_routes.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
       - name: Commit if changed
+        id: commit
         run: |
-          if git diff --quiet README.md; then
+          git add README.md worker/src/routes.json site/src/generated/search-indexes.json
+          if git diff --cached --quiet; then
             echo "No changes."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             git config user.name "pack-dashboard-bot"
             git config user.email "[email protected]"
-            git add README.md
             git commit -m "chore: refresh dashboard ($(date -u +%Y-%m-%dT%H:%M:%SZ))"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
+      # A push made with GITHUB_TOKEN does not trigger portal-deploy's push
+      # event, and workflow_dispatch is the documented exception that does
+      # create a run, so dispatch it explicitly when the data changed.
+      # Deliberately the default token here, not DASHBOARD_PAT: the dispatch
+      # needs this repo's actions:write, which the read-only PAT lacks.
+      - name: Redeploy portal
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run portal-deploy.yml --ref main
