@@ -1,4 +1,5 @@
 {
   "__default__": "https://software-pack-dashboard.pages.dev",
+  "llm-serving-pack": "https://llm-serving-pack.pages.dev",
   "building-a-software-pack": "https://nebari-software-pack-template.pages.dev"
 }
