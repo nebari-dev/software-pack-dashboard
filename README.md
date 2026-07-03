@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-03T13:14:44Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-03T13:15:38Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -16,7 +16,7 @@ _Last regenerated: 2026-07-03T13:14:44Z. Trigger a refresh via the `Refresh pack
 | [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0 (Jun 19) | Jul 03 | – | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jul 03 | – | – |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.13 (Jun 18) | Jul 03 | – | – |
-| [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi deployment pack for Nebari | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.1 (Jul 02) | Jul 03 | – | – |
+| [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | A Nebari software pack that deploys Nebi, a server for managing versioned, multi-user Pixi environments, with Keycloak SSO and a PostgreSQL backend. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.1 (Jul 02) | Jul 03 | – | – |
 | [Capability Pack](https://github.com/nebari-dev/python-capability-pack) | Nebari software pack for deploying pixi-backed Python capabilities on Kubernetes. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jul 03 | – | – |
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jul 03 | – | – |
@@ -63,4 +63,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-03T13:14:44Z_
+_Generated: 2026-07-03T13:15:38Z_
