@@ -2,33 +2,33 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-03T12:53:16Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-03T13:04:59Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 2 Beta · 3 Alpha · 8 Experimental · 0 Deprecated
-- 14 packs flagged · breakdown: metadata-invalid: 11, metadata-missing: 3, repo-not-found: 3
+- 0 GA · 5 Beta · 4 Alpha · 7 Experimental · 0 Deprecated
+- 3 packs flagged · breakdown: metadata-invalid: 3
 
 ## Packs
 
 | Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | A Helm chart that deploys JupyterHub and jhub-apps on top of NIC-provisioned Kubernetes clusters. | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-data-science-pack-0.1.0 (Jun 19) | Jun 26 | ⚠️ metadata-invalid | name 'nebari-data-science-pack' does not match repo name 'data-science-pack' |
-| [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jul 03 | – | – |
-| [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Experimental | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.13 (Jun 18) | Jul 01 | ⚠️ metadata-invalid | name 'nebari-chat-pack' does not match repo name 'chat-pack' |
+| [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | A Nebari software pack that serves LLMs on Kubernetes via llm-d, with per-model OIDC access control, API key management, and Envoy AI Gateway integration for token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.0-alpha.9 (Jun 16) | Jul 03 | – | – |
+| [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application for Nebari with a React frontend and a Ravnar/AG-UI backend, packaged as a Helm chart wired into Keycloak SSO. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.13 (Jun 18) | Jul 03 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi deployment pack for Nebari | Experimental | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.1 (Jul 02) | Jul 02 | ⚠️ metadata-invalid | name 'nebari-nebi-pack' does not match repo name 'nebi-pack' |
-| [python-capability-pack](https://github.com/nebari-dev/python-capability-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-lgtm-pack' does not match repo name 'lgtm-pack' |
-| [Superset Pack](https://github.com/nebari-dev/superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jun 10 | ⚠️ metadata-invalid | name 'nebari-superset-pack' does not match repo name 'superset-pack' |
-| [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | A Nebari software pack that deploys Ray Serve on Kubernetes via the RayService CRD, with optional routing, TLS, and OIDC authentication through the nebari-operator. | Experimental | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | v0.3.1 (Jun 19) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-rayserve-pack' does not match repo name 'rayserve-pack' |
+| [Capability Pack](https://github.com/nebari-dev/python-capability-pack) | Nebari software pack for deploying pixi-backed Python capabilities on Kubernetes. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
+| [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | A Helm chart that deploys the Grafana LGTM observability stack (Loki, Grafana, Tempo, Mimir) on Kubernetes, with optional Nebari platform integration. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jul 03 | – | – |
+| [Superset Pack](https://github.com/nebari-dev/superset-pack) | A Nebari software pack that wraps the Apache Superset Helm chart with NebariApp CRD routing, Keycloak OAuth, and a standalone mode for non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jul 03 | – | – |
+| [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | A Nebari software pack that deploys Ray Serve on Kubernetes via the RayService CRD, with optional routing, TLS, and OIDC authentication through the nebari-operator. | Beta | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | v0.3.1 (Jun 19) | Jul 03 | – | – |
 | [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | A Nebari software pack that deploys MLflow with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Jun 19 | ⚠️ metadata-invalid | name 'nebari-mlflow-pack' does not match repo name 'mlflow-pack' |
-| [data-engineering-pack](https://github.com/nebari-dev/data-engineering-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [external-auth-pack](https://github.com/nebari-dev/external-auth-pack) | – | – | – | N/A | – | – | – | 🆘 repo-not-found 🆘 metadata-missing | – |
-| [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | Experimental | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jun 26 | ⚠️ metadata-invalid | name 'nebari-longhorn-backup-pack' does not match repo name 'longhorn-backup-pack' |
-| [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | Jul 01 | ⚠️ metadata-invalid | name 'nebari-provenance-collector-pack' does not match repo name 'provenance-collector-pack' |
-| [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | May 19 | ⚠️ metadata-invalid | name 'nebari-pi-coding-agent-pack' does not match repo name 'pi-coding-agent-pack' |
+| [Data Engineering Pack](https://github.com/nebari-dev/data-engineering-pack) | Nebari software pack for data-engineering workloads (work in progress; scaffolded from the pack template). | Experimental | [@ns-mkusper](https://github.com/ns-mkusper) | Full | Yes | v0.1.0-alpha.0 (Jun 18) | Jul 03 | – | – |
+| [External Auth Pack](https://github.com/nebari-dev/external-auth-pack) | Nebari software pack for connecting external accounts and delivering credentials into Nebari-launched environments (notebooks, IDEs,   apps, and services), enabling secure integrations with git providers like GitHub and other third-party platforms and applications. | Experimental | [@ns-mkusper](https://github.com/ns-mkusper) | Full | Yes | – | Jul 03 | – | – |
+| [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Longhorn-native hourly snapshot and daily S3 backup schedules covering every volume on the cluster's default StorageClass. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jul 03 | – | – |
+| [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | A Kubernetes-native CronJob that discovers running images and Helm releases, resolves digests, verifies signatures, detects SLSA/SBOM attestations, and emits timestamped provenance reports. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0-alpha.4 (May 14) | Jul 03 | – | – |
+| [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | A Helm chart that extends Nebari's data-science JupyterHub stack with a Pi coding-agent workflow, including named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
-| [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Deploys Langfuse, an open-source LLM engineering platform: tracing, evals, prompt management, and metrics for debugging and improving LLM applications. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Jun 12 | ⚠️ metadata-invalid | name 'nebari-langfuse-pack' does not match repo name 'langfuse-pack' |
+| [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Deploys Langfuse, an open-source LLM engineering platform: tracing, evals, prompt management, and metrics for debugging and improving LLM applications. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Jul 03 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
 
 ## Column reference
 
@@ -63,4 +63,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-03T12:53:16Z_
+_Generated: 2026-07-03T13:04:59Z_
