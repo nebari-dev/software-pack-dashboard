@@ -50,9 +50,20 @@
   line-height: 1.2;
   color: var(--sl-color-white);
 }
+.pack-card__desc {
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-gray-2);
+  line-height: 1.45;
+  /* Repo descriptions vary wildly in length; clamp so cards stay even. */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 .pack-card__owner {
   font-size: var(--sl-text-xs);
   color: var(--sl-color-gray-3);
+  margin-top: auto;
 }
 
 /* Maturity badge - the color encodes maturity, drawn from the Nebari palette.

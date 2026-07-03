@@ -17,5 +17,5 @@ jobs:
       - run: python -m pytest tests/
       - name: Dry-run generator
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
         run: python generate.py --dry-run > /tmp/dashboard.md

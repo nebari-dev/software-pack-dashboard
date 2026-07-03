@@ -10,6 +10,7 @@ worker/extra-routes.json; everything else falls through to `__default__`
 from __future__ import annotations
 
 import json
+import os
 import sys
 import urllib.error
 import urllib.request
@@ -17,13 +18,20 @@ from pathlib import Path
 
 import yaml
 
-RAW = "https://raw.githubusercontent.com/{repo}/main/pack-metadata.yaml"
+CONTENTS_URL = "https://api.github.com/repos/{repo}/contents/pack-metadata.yaml"
 
 
-def fetch_metadata(repo: str) -> dict:
-    url = RAW.format(repo=repo)
+def fetch_metadata(repo: str, token: str | None = None) -> dict:
+    # Contents API rather than raw.githubusercontent.com: the latter does not
+    # reliably honor fine-grained PATs, which breaks private pack repos.
+    req = urllib.request.Request(CONTENTS_URL.format(repo=repo))
+    req.add_header("Accept", "application/vnd.github.raw+json")
+    req.add_header("User-Agent", "nebari-pack-dashboard/1.0")
+    req.add_header("X-GitHub-Api-Version", "2022-11-28")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
     try:
-        with urllib.request.urlopen(url, timeout=30) as resp:
+        with urllib.request.urlopen(req, timeout=30) as resp:
             return yaml.safe_load(resp.read()) or {}
     except urllib.error.HTTPError as e:
         if e.code == 404:
@@ -57,7 +65,8 @@ def main():
     root = Path(__file__).parent
     packs = [p["repo"] for p in yaml.safe_load((root / "tracked-packs.yaml").read_text())["packs"]]
     extras = json.loads((root / "worker" / "extra-routes.json").read_text())
-    routes = build_routes(packs, fetch_metadata, extras,
+    token = os.environ.get("GITHUB_TOKEN")
+    routes = build_routes(packs, lambda repo: fetch_metadata(repo, token), extras,
                           default_host="https://software-pack-dashboard.pages.dev")
     out = root / "worker" / "src" / "routes.json"
     out.parent.mkdir(parents=True, exist_ok=True)

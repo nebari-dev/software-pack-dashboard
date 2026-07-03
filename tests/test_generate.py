@@ -515,3 +515,66 @@ def test_render_landing_html_escapes_display_name_and_owner():
     assert "&lt;script&gt;" in out
     assert "&amp;" in out
     assert "&lt;evil&gt;" in out
+
+
+# ---------------------------------------------------------------------------
+# fetch_metadata (contents API)
+# ---------------------------------------------------------------------------
+
+
+def test_fetch_metadata_uses_contents_api(monkeypatch):
+    """fetch_metadata must use the contents API, not raw.githubusercontent.com.
+
+    raw.githubusercontent.com does not reliably honor fine-grained PATs, so
+    private pack repos (e.g. data-engineering-pack) come back 404 even with
+    a valid token. The contents API with the raw media type works for both
+    public and private repos.
+    """
+    calls = []
+
+    def fake_request(url, token, accept="application/vnd.github+json"):
+        calls.append({"url": url, "token": token, "accept": accept})
+        return 200, b"name: foo\nlevel: beta\n"
+
+    monkeypatch.setattr(generate, "_request_with_retry", fake_request)
+    data, errors = generate.fetch_metadata("nebari-dev/foo", "tok123")
+
+    assert data == {"name": "foo", "level": "beta"}
+    assert errors == []
+    assert calls[0]["url"] == "https://api.github.com/repos/nebari-dev/foo/contents/pack-metadata.yaml"
+    assert calls[0]["token"] == "tok123"
+    assert calls[0]["accept"] == "application/vnd.github.raw+json"
+
+
+def test_fetch_metadata_404_reports_missing(monkeypatch):
+    monkeypatch.setattr(generate, "_request_with_retry", lambda *a, **k: (404, b""))
+    data, errors = generate.fetch_metadata("nebari-dev/foo", None)
+    assert data is None
+    assert errors == ["metadata-missing"]
+
+
+def test_fetch_metadata_non_mapping_rejected(monkeypatch):
+    monkeypatch.setattr(generate, "_request_with_retry", lambda *a, **k: (200, b"- just\n- a list\n"))
+    data, errors = generate.fetch_metadata("nebari-dev/foo", None)
+    assert data is None
+    assert errors == ["pack-metadata.yaml is not a YAML mapping"]
+
+
+def test_landing_card_includes_repo_description():
+    """Cards should show the GitHub repo description, HTML-escaped."""
+    rows = [PackRow(
+        repo="nebari-dev/foo-pack",
+        metadata={"display_name": "Foo", "level": "beta", "owner": "alice"},
+        github_data={"description": "Deploys Foo <fast> & easy"},
+    )]
+    out = render_landing_markdown(rows, "2026-07-03T00:00:00Z")
+    assert '<span class="pack-card__desc">Deploys Foo &lt;fast&gt; &amp; easy</span>' in out
+
+
+def test_landing_card_omits_description_span_when_missing():
+    rows = [PackRow(
+        repo="nebari-dev/foo-pack",
+        metadata={"display_name": "Foo", "level": "beta", "owner": "alice"},
+    )]
+    out = render_landing_markdown(rows, "2026-07-03T00:00:00Z")
+    assert "pack-card__desc" not in out
