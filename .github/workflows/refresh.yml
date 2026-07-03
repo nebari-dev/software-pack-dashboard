@@ -26,7 +26,10 @@ jobs:
       - run: pip install -r requirements.txt
       - run: python generate.py
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # DASHBOARD_PAT is a fine-grained PAT with contents:read on the
+          # nebari-dev pack repos; the default workflow token cannot see
+          # private packs. Falls back for forks/local checks.
+          GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
       - name: Commit if changed
         run: |
           if git diff --quiet README.md; then

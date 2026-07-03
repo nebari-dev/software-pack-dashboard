@@ -1,1 +1,4 @@
-{ "__default__": "https://software-pack-dashboard.pages.dev" }
+{
+  "__default__": "https://software-pack-dashboard.pages.dev",
+  "building-a-software-pack": "https://nebari-software-pack-template.pages.dev"
+}

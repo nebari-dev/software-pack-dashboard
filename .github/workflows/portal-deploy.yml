@@ -19,12 +19,13 @@ jobs:
       - name: Render landing content
         run: python generate.py --landing site/src/content/docs/index.md
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # DASHBOARD_PAT: fine-grained PAT that can read private pack repos.
+          GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Generate Worker routes + search indexes
         run: python generate_routes.py
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Build landing (Astro)
         run: cd site && bun install --frozen-lockfile && bun run build

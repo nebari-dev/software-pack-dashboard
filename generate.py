@@ -24,7 +24,6 @@ import yaml
 
 
 GITHUB_API = "https://api.github.com"
-RAW_BASE = "https://raw.githubusercontent.com"
 USER_AGENT = "nebari-pack-dashboard/1.0"
 
 LEVELS = ("experimental", "alpha", "beta", "ga")
@@ -146,12 +145,16 @@ def _request_with_retry(url: str, token: str | None, accept: str = "application/
 def fetch_metadata(repo: str, token: str | None) -> tuple[dict | None, list[str]]:
     """Fetch pack-metadata.yaml. Returns (data | None, errors).
 
+    Uses the contents API rather than raw.githubusercontent.com because the
+    latter does not reliably honor fine-grained PATs, which breaks private
+    pack repos.
+
     errors is a list of error message strings. If the file is missing,
     the single error 'metadata-missing' is returned. If the file is
     present but malformed, returns (None, [parse error]).
     """
-    url = f"{RAW_BASE}/{repo}/HEAD/pack-metadata.yaml"
-    status, body = _request_with_retry(url, token, accept="*/*")
+    url = f"{GITHUB_API}/repos/{repo}/contents/pack-metadata.yaml"
+    status, body = _request_with_retry(url, token, accept="application/vnd.github.raw+json")
     if status == 404:
         return None, ["metadata-missing"]
     if status == 0 or status >= 400:
@@ -604,7 +607,7 @@ def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
     """Starlight splash content for packs.nebari.dev: hero + a color-coded pack catalog.
 
     Emits a raw-HTML card grid (Astro renders raw HTML). Free-form values
-    (display_name, owner) are HTML-escaped; the docs URL scheme is allowlisted and
+    (display_name, owner, repo description) are HTML-escaped; the docs URL scheme is allowlisted and
     escaped for HTML attribute context; the maturity level comes from a fixed
     allowlist and drives a `data-level` attribute for CSS badge coloring. Styled by
     the dashboard's src/styles/dashboard.css.
@@ -644,9 +647,12 @@ def render_landing_markdown(rows: list[PackRow], generated_at: str) -> str:
             href = attr(docs.strip())
         else:
             href = attr(f"https://github.com/{r.repo}")
+        desc = r.github_data.get("description") if isinstance(r.github_data, dict) else None
         lines.append(f'<a class="pack-card" data-level="{level_key}" href="{href}">')
         lines.append(f'<span class="pack-card__level">{level_label}</span>')
         lines.append(f'<span class="pack-card__name">{display}</span>')
+        if isinstance(desc, str) and desc.strip():
+            lines.append(f'<span class="pack-card__desc">{_html_escape_text(desc.strip())}</span>')
         lines.append(f'<span class="pack-card__owner">{owner}</span>')
         lines.append("</a>")
     lines.append("</div>")
