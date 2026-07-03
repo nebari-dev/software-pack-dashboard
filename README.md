@@ -2,11 +2,11 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-03T15:06:21Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-03T16:07:25Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 7 Beta · 6 Alpha · 4 Experimental · 0 Deprecated
+- 0 GA · 8 Beta · 5 Alpha · 4 Experimental · 0 Deprecated
 - 0 packs flagged
 
 ## Packs
@@ -29,7 +29,7 @@ _Last regenerated: 2026-07-03T15:06:21Z. Trigger a refresh via the `Refresh pack
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | Extends Nebari's JupyterHub with a Pi coding-agent workflow: named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
 | [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Langfuse LLM observability: tracing, evals, prompt management, and metrics for debugging and improving LLM apps. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Jul 03 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
-| [Nebari Frames](https://github.com/nebari-dev/nebari-frames) | Nebari Frames is the registry and exchange for Frames: scoped, text-based artifacts that carry organizational context into AI conversations. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.5 (Jul 03) | Jul 03 | – | MCP/Claude requires manual realm config (enable DCR + default-scope audience mapper); see docs/conn… |
+| [Nebari Frames](https://github.com/nebari-dev/nebari-frames) | Nebari Frames is the registry and exchange for Frames: scoped, text-based artifacts that carry organizational context into AI conversations. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.5 (Jul 03) | Jul 03 | – | MCP/Claude requires manual realm config (enable DCR + default-scope audience mapper); see docs/conn… |
 
 ## Column reference
 
@@ -64,4 +64,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-03T15:06:21Z_
+_Generated: 2026-07-03T16:07:25Z_
