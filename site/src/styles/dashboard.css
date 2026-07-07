@@ -2,17 +2,15 @@
  * Layered on @nebari/starlight. Uses the theme's --nbr-* palette tokens and
  * Starlight's --sl-* variables so it stays on-brand and theme-aware. */
 
-/* Center and constrain the splash content so it is not stranded on wide screens. */
-.sl-markdown-content {
-  max-width: 62rem;
-  margin-inline: auto;
-}
+/* Match the @nebari/starlight homepage layout: on a sidebar-less splash page
+ * Starlight sets --sl-content-width to 67.5rem and centers the .sl-container,
+ * so we don't cap .sl-markdown-content ourselves - it inherits that same width
+ * and the header and body span exactly as they do on the Starlight home. */
 
 /* Hero intro reads as a lead paragraph, not body copy. */
 .sl-markdown-content > p:first-of-type {
   font-size: var(--sl-text-lg);
   color: var(--sl-color-gray-2);
-  max-width: 46rem;
 }
 
 /* Pack catalog: a responsive grid that fills the page width. */
