@@ -1,0 +1,75 @@
+name: Preview deploy
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - 'generate.py'
+      - '.github/workflows/preview-deploy.yml'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+# One live preview build per PR; a newer push cancels the in-flight one.
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    # Fork PRs receive no secrets, so the Cloudflare deploy could not
+    # authenticate. Restrict to same-repo PRs; forks are skipped cleanly
+    # (neutral status, not a failed check).
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - run: pip install -r requirements.txt
+
+      - name: Render landing content
+        env:
+          # Same pattern as lint-and-test.yml. DASHBOARD_PAT is available on
+          # same-repo PRs and lets private packs resolve; falls back otherwise.
+          GITHUB_TOKEN: ${{ secrets.DASHBOARD_PAT || secrets.GITHUB_TOKEN }}
+        run: python generate.py --landing site/src/content/docs/index.md
+
+      - uses: oven-sh/setup-bun@v2
+      - name: Build landing (Astro)
+        run: cd site && bun install --frozen-lockfile && bun run build
+
+      - name: Deploy preview to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Non-main branch => a Pages PREVIEW deployment, not production.
+          command: pages deploy site/dist --project-name=software-pack-dashboard --branch=pr-${{ github.event.pull_request.number }}
+
+      - name: Comment preview URL on the PR
+        if: steps.deploy.outputs.pages-deployment-alias-url != '' || steps.deploy.outputs.deployment-url != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          ALIAS_URL: ${{ steps.deploy.outputs.pages-deployment-alias-url }}
+          UNIQUE_URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: |
+          set -euo pipefail
+          marker='<!-- preview-url -->'
+          url="${ALIAS_URL:-$UNIQUE_URL}"
+          body=$(printf '%s\n\n**Preview deploy:** %s\n\nBuilt from `%s`. Redeploys on each push to this PR.' "$marker" "$url" "$HEAD_SHA")
+          # Upsert a single marker comment so re-pushes update in place.
+          comments=$(gh api "repos/$REPO/issues/$PR/comments" --paginate)
+          id=$(printf '%s' "$comments" | jq -r --arg m "$marker" 'map(select(.body | contains($m))) | .[0].id // empty')
+          if [ -n "$id" ]; then
+            gh api --method PATCH "repos/$REPO/issues/comments/$id" -f body="$body"
+          else
+            gh api --method POST "repos/$REPO/issues/$PR/comments" -f body="$body"
+          fi
