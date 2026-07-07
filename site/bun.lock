@@ -6,7 +6,7 @@
       "name": "software-pack-dashboard-site",
       "dependencies": {
         "@astrojs/starlight": "^0.41.3",
-        "@nebari/starlight": "^0.2.0",
+        "@nebari/starlight": "^0.2.1",
         "astro": "^7.0.6",
       },
     },
@@ -206,7 +206,7 @@
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.1.6", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1", "@emnapi/runtime": "^1.7.1" } }, "sha512-ZLv/JdUfkvOy9eCnnBaGfiO+XimbjebAeO+MRQqD/B+FR1tnRN0tpKSJHRbE8sFfS6aqsXZ67TQjfwfsxULVbg=="],
 
-    "@nebari/starlight": ["@nebari/starlight@0.2.0", "", { "peerDependencies": { "@astrojs/starlight": ">=0.33.0 <1.0.0", "astro": ">=7.0.6" } }, "sha512-FJAtSfn/B2/fBQKElur0JrwC+4VQ7RutegaLuATu/ocKFDPzGE5cxshjHOY/Xn7A972QypDRYXM/DFNVaD3t5g=="],
+    "@nebari/starlight": ["@nebari/starlight@0.2.1", "", { "peerDependencies": { "@astrojs/starlight": ">=0.33.0 <1.0.0", "astro": ">=7.0.6" } }, "sha512-XvpOJVlBwT1xhSpyqStNncBGuqowpWuqXpZwtv8xrOBCjz2VPNw2R4cchezb66lTHWqE5oohyTyOL3YrR+TBLw=="],
 
     "@oslojs/encoding": ["@oslojs/encoding@1.1.0", "", {}, "sha512-70wQhgYmndg4GCPxPPxPGevRKqTIJ2Nh4OkiMWmDAVYsTQ+Ta7Sq+rPevXyXGdzr30/qZBnyOalCszoMxlyldQ=="],
 
