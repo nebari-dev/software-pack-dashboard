@@ -23,6 +23,7 @@ jobs:
     # (neutral status, not a failed check).
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
 
@@ -67,7 +68,8 @@ jobs:
           body=$(printf '%s\n\n**Preview deploy:** %s\n\nBuilt from `%s`. Redeploys on each push to this PR.' "$marker" "$url" "$HEAD_SHA")
           # Upsert a single marker comment so re-pushes update in place.
           comments=$(gh api "repos/$REPO/issues/$PR/comments" --paginate)
-          id=$(printf '%s' "$comments" | jq -r --arg m "$marker" 'map(select(.body | contains($m))) | .[0].id // empty')
+          # (.body // "") guards null bodies; head -n1 guards --paginate emitting one array per page.
+          id=$(printf '%s' "$comments" | jq -r --arg m "$marker" 'map(select((.body // "") | contains($m))) | .[0].id // empty' | head -n1)
           if [ -n "$id" ]; then
             gh api --method PATCH "repos/$REPO/issues/comments/$id" -f body="$body"
           else
