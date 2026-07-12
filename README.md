@@ -2,12 +2,12 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-11T23:49:42Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-12T02:11:30Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 8 Beta · 5 Alpha · 4 Experimental · 0 Deprecated
-- 0 packs flagged
+- 0 GA · 8 Beta · 4 Alpha · 4 Experimental · 0 Deprecated
+- 1 packs flagged · breakdown: metadata-invalid: 1
 
 ## Packs
 
@@ -21,7 +21,7 @@ _Last regenerated: 2026-07-11T23:49:42Z. Trigger a refresh via the `Refresh pack
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | Cluster observability with the Grafana LGTM stack: Loki logs, Tempo traces, Mimir metrics, and Grafana dashboards. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jul 03 | – | – |
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | Apache Superset dashboards and SQL exploration with Keycloak OAuth and NebariApp routing. Also installs standalone on non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jul 03 | – | – |
 | [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | Scalable model serving with Ray Serve through the RayService CRD, with optional routing, TLS, and OIDC via the nebari-operator. | Beta | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | v0.3.1 (Jun 19) | Jul 03 | – | – |
-| [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | MLflow experiment tracking and model registry with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Jul 03 | – | – |
+| [mlflow-pack](https://github.com/nebari-dev/mlflow-pack) | MLflow experiment tracking and model registry with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | – | – | N/A | – | v0.1.0-alpha.1 (Jun 18) | Jul 03 | ⚠️ metadata-invalid | fetch failed: HTTP 502 |
 | [Data Engineering Pack](https://github.com/nebari-dev/data-engineering-pack) | Airflow orchestration and Marquez lineage tracking with OpenLineage defaults, wired into Nebari routing, TLS, and Keycloak auth. Modular components with demo-to-production deployment profiles. | Experimental | [@ns-mkusper](https://github.com/ns-mkusper) | Full | Yes | v0.1.0-alpha.0 (Jun 18) | Jul 03 | – | – |
 | [External Auth Pack](https://github.com/nebari-dev/external-auth-pack) | Connects users' external accounts (GitHub and other providers) and delivers their credentials into Nebari-launched notebooks, IDEs, and apps. | Experimental | [@ns-mkusper](https://github.com/ns-mkusper) | Full | Yes | – | Jul 03 | – | – |
 | [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Hourly Longhorn snapshots and daily S3 backups for every volume on the cluster's default StorageClass. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jul 03 | – | – |
@@ -64,4 +64,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-11T23:49:42Z_
+_Generated: 2026-07-12T02:11:30Z_
