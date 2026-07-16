@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-16T18:01:52Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-16T18:52:34Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -15,7 +15,7 @@ _Last regenerated: 2026-07-16T18:01:52Z. Trigger a refresh via the `Refresh pack
 |---|---|---|---|---|---|---|---|---|---|
 | [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | Multi-user JupyterHub with Nebari's data science images and jhub-apps for publishing notebooks, dashboards, and apps from the browser. | Beta | [@aktech](https://github.com/aktech) | Full | No | nebari-data-science-pack-0.1.0 (Jun 19) | Jul 10 | – | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | Self-hosted LLM serving via llm-d. Includes per-model OIDC access control, API key management, and Envoy AI Gateway token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-llm-serving-0.1.2 (Jul 15) | Jul 16 | – | – |
-| [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application wired into Keycloak SSO, with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.14 (Jul 06) | Jul 14 | – | – |
+| [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application wired into Keycloak SSO, with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.14 (Jul 06) | Jul 16 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi environment management for teams: versioned, shareable Pixi environments with rollback, backed by Keycloak SSO and PostgreSQL. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.2 (Jul 07) | Jul 07 | – | – |
 | [Capability Pack](https://github.com/nebari-dev/python-capability-pack) | Deploy Python services from a pixi manifest with one CRD. The capability operator wires each service with routing, TLS, and Keycloak OIDC on a shared hostname. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | Cluster observability with the Grafana LGTM stack: Loki logs, Tempo traces, Mimir metrics, and Grafana dashboards. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jul 03 | – | – |
@@ -30,7 +30,7 @@ _Last regenerated: 2026-07-16T18:01:52Z. Trigger a refresh via the `Refresh pack
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.0 (Apr 15) | May 15 | – | – |
 | [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Langfuse LLM observability: tracing, evals, prompt management, and metrics for debugging and improving LLM apps. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Jul 03 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
 | [Nebari Frames](https://github.com/nebari-dev/nebari-frames) | Nebari Frames is the registry and exchange for Frames: scoped, text-based artifacts that carry organizational context into AI conversations. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.5 (Jul 03) | Jul 07 | – | MCP/Claude requires manual realm config (enable DCR + default-scope audience mapper); see docs/conn… |
-| [Nebari Apps Pack](https://github.com/nebari-dev/apps-pack) | Software Pack for launching, managing, and observing web applications on a Nebari. | Experimental | [@jbouder](https://github.com/jbouder) | N/A | – | – | Jul 16 | – | – |
+| [Nebari Apps Pack](https://github.com/nebari-dev/apps-pack) | Software Pack for launching, managing, and observing web applications on a Nebari. | Experimental | [@jbouder](https://github.com/jbouder) | Full | No | – | Jul 16 | – | – |
 
 ## Column reference
 
@@ -65,4 +65,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-16T18:01:52Z_
+_Generated: 2026-07-16T18:52:34Z_
