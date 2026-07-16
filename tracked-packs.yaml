@@ -20,3 +20,4 @@ packs:
   - repo: nebari-dev/skillsctl
   - repo: nebari-dev/langfuse-pack
   - repo: nebari-dev/nebari-frames
+  - repo: nebari-dev/apps-pack
