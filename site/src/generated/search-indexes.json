@@ -1,5 +1,6 @@
 [
   "/llm-serving-pack/pagefind/",
   "/provenance-collector-pack/pagefind/",
-  "/nebari-frames/pagefind/"
+  "/nebari-frames/pagefind/",
+  "/apps-pack/pagefind/"
 ]
