@@ -176,12 +176,17 @@ def _select_latest_release(releases: list[dict]) -> dict | None:
     Prereleases are included because the dashboard surfaces alphas/betas; only
     drafts are excluded. ``published_at``/``created_at`` are ISO 8601 UTC
     strings, which sort lexicographically in chronological order, so we sort on
-    ``published_at`` and fall back to ``created_at`` when it is null.
+    ``published_at`` (falling back to ``created_at`` when it is null) and break
+    exact ties with the release ``id`` (monotonically increasing) so the result
+    stays deterministic even when two releases share a timestamp.
     """
     candidates = [r for r in releases if isinstance(r, dict) and not r.get("draft")]
     if not candidates:
         return None
-    return max(candidates, key=lambda r: r.get("published_at") or r.get("created_at") or "")
+    return max(
+        candidates,
+        key=lambda r: (r.get("published_at") or r.get("created_at") or "", r.get("id") or 0),
+    )
 
 
 def fetch_github_data(repo: str, token: str | None) -> dict:
@@ -224,6 +229,12 @@ def fetch_github_data(repo: str, token: str | None) -> dict:
         try:
             releases = json.loads(body)
             if isinstance(releases, list):
+                if len(releases) == 100:
+                    print(
+                        f"WARN: {repo} returned a full page of 100 releases; "
+                        "'Last release' may be truncated (add pagination)",
+                        file=sys.stderr,
+                    )
                 rel = _select_latest_release(releases)
                 if rel is not None:
                     out["release_tag"] = rel.get("tag_name")

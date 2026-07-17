@@ -611,12 +611,33 @@ def test_fetch_metadata_non_mapping_rejected(monkeypatch):
             [{"tag_name": "v0.1.0", "published_at": "2026-01-01T00:00:00Z", "created_at": "2026-01-01T00:00:00Z", "draft": False, "prerelease": False}],
             "v0.1.0",
         ),
+        # Malformed (non-dict) list entries are ignored, not fatal.
+        (
+            [
+                "not-a-dict",
+                None,
+                {"tag_name": "v1.0.0", "published_at": "2026-01-01T00:00:00Z", "created_at": "2026-01-01T00:00:00Z", "draft": False, "prerelease": False},
+            ],
+            "v1.0.0",
+        ),
     ],
 )
 def test_select_latest_release_picks_most_recent_published(releases, expected_tag):
     rel = generate._select_latest_release(releases)
     assert rel is not None
     assert rel["tag_name"] == expected_tag
+
+
+def test_select_latest_release_tie_is_deterministic_by_id():
+    """On identical published_at, selection must not depend on list order.
+
+    Ties are broken by the monotonically increasing release id, so the newest
+    (higher id) wins regardless of the order GitHub returns them in.
+    """
+    low = {"tag_name": "same-time-low-id", "id": 100, "published_at": "2026-04-01T00:00:00Z", "created_at": "2026-04-01T00:00:00Z", "draft": False}
+    high = {"tag_name": "same-time-high-id", "id": 200, "published_at": "2026-04-01T00:00:00Z", "created_at": "2026-04-01T00:00:00Z", "draft": False}
+    assert generate._select_latest_release([low, high])["tag_name"] == "same-time-high-id"
+    assert generate._select_latest_release([high, low])["tag_name"] == "same-time-high-id"
 
 
 @pytest.mark.parametrize(
