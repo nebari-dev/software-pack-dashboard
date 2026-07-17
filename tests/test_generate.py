@@ -1,6 +1,7 @@
 """Unit tests for generate.py. No network access."""
 from __future__ import annotations
 
+import json
 import sys
 from datetime import date
 from pathlib import Path
@@ -558,6 +559,103 @@ def test_fetch_metadata_non_mapping_rejected(monkeypatch):
     data, errors = generate.fetch_metadata("nebari-dev/foo", None)
     assert data is None
     assert errors == ["pack-metadata.yaml is not a YAML mapping"]
+
+
+# ---------------------------------------------------------------------------
+# _select_latest_release (deterministic release selection)
+# ---------------------------------------------------------------------------
+
+# GitHub's list-releases endpoint does not document a sort order, so selection
+# must never depend on list position. Each case lists releases in a
+# deliberately unhelpful order and asserts the most recently *published*
+# non-draft release is chosen. Prereleases are included; only drafts excluded.
+@pytest.mark.parametrize(
+    "releases,expected_tag",
+    [
+        # Regression for the llm-serving-pack bug (issue #20): the newest
+        # published release is not first in the list.
+        (
+            [
+                {"tag_name": "v0.1.0-alpha.9", "published_at": "2026-06-16T15:04:20Z", "created_at": "2026-06-16T15:02:54Z", "draft": False, "prerelease": False},
+                {"tag_name": "nebari-llm-serving-0.1.2", "published_at": "2026-07-15T21:40:25Z", "created_at": "2026-07-15T21:40:06Z", "draft": False, "prerelease": False},
+                {"tag_name": "v0.1.1", "published_at": "2026-07-13T12:52:13Z", "created_at": "2026-07-10T11:16:48Z", "draft": False, "prerelease": False},
+            ],
+            "nebari-llm-serving-0.1.2",
+        ),
+        # Prereleases count: a prerelease with the latest publish date wins.
+        (
+            [
+                {"tag_name": "v1.0.0", "published_at": "2026-01-01T00:00:00Z", "created_at": "2026-01-01T00:00:00Z", "draft": False, "prerelease": False},
+                {"tag_name": "v1.1.0-alpha.1", "published_at": "2026-02-01T00:00:00Z", "created_at": "2026-02-01T00:00:00Z", "draft": False, "prerelease": True},
+            ],
+            "v1.1.0-alpha.1",
+        ),
+        # Drafts are excluded even when created most recently.
+        (
+            [
+                {"tag_name": "v2.0.0-draft", "published_at": None, "created_at": "2026-09-01T00:00:00Z", "draft": True, "prerelease": False},
+                {"tag_name": "v1.0.0", "published_at": "2026-08-01T00:00:00Z", "created_at": "2026-08-01T00:00:00Z", "draft": False, "prerelease": False},
+            ],
+            "v1.0.0",
+        ),
+        # A non-draft with null published_at falls back to created_at ordering.
+        (
+            [
+                {"tag_name": "older", "published_at": "2026-03-01T00:00:00Z", "created_at": "2026-03-01T00:00:00Z", "draft": False, "prerelease": False},
+                {"tag_name": "newer-null-publish", "published_at": None, "created_at": "2026-05-01T00:00:00Z", "draft": False, "prerelease": False},
+            ],
+            "newer-null-publish",
+        ),
+        # Single release.
+        (
+            [{"tag_name": "v0.1.0", "published_at": "2026-01-01T00:00:00Z", "created_at": "2026-01-01T00:00:00Z", "draft": False, "prerelease": False}],
+            "v0.1.0",
+        ),
+    ],
+)
+def test_select_latest_release_picks_most_recent_published(releases, expected_tag):
+    rel = generate._select_latest_release(releases)
+    assert rel is not None
+    assert rel["tag_name"] == expected_tag
+
+
+@pytest.mark.parametrize(
+    "releases",
+    [
+        [],
+        [{"tag_name": "draft-only", "published_at": None, "created_at": "2026-01-01T00:00:00Z", "draft": True, "prerelease": False}],
+    ],
+)
+def test_select_latest_release_returns_none_when_no_usable_release(releases):
+    assert generate._select_latest_release(releases) is None
+
+
+def test_fetch_github_data_selects_newest_published_release(monkeypatch):
+    """fetch_github_data must not trust the position of /releases results.
+
+    Regression for issue #20: given releases returned in an order where the
+    newest published one is not first, the newest published tag must win.
+    """
+    releases_json = json.dumps(
+        [
+            {"tag_name": "v0.1.0-alpha.9", "published_at": "2026-06-16T15:04:20Z", "created_at": "2026-06-16T15:02:54Z", "draft": False, "prerelease": False},
+            {"tag_name": "nebari-llm-serving-0.1.2", "published_at": "2026-07-15T21:40:25Z", "created_at": "2026-07-15T21:40:06Z", "draft": False, "prerelease": False},
+            {"tag_name": "v0.1.1", "published_at": "2026-07-13T12:52:13Z", "created_at": "2026-07-10T11:16:48Z", "draft": False, "prerelease": False},
+        ]
+    ).encode()
+
+    def fake_request(url, token, accept="application/vnd.github+json"):
+        if "/releases" in url:
+            return 200, releases_json
+        if "/commits" in url:
+            return 200, json.dumps([{"commit": {"committer": {"date": "2026-07-16T00:00:00Z"}}}]).encode()
+        # repo metadata call
+        return 200, json.dumps({"open_issues_count": 0, "description": "x"}).encode()
+
+    monkeypatch.setattr(generate, "_request_with_retry", fake_request)
+    data = generate.fetch_github_data("nebari-dev/foo", "tok")
+    assert data["release_tag"] == "nebari-llm-serving-0.1.2"
+    assert data["release_date"] == date(2026, 7, 15)
 
 
 def test_landing_card_includes_repo_description():
