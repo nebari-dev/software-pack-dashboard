@@ -168,6 +168,27 @@ def fetch_metadata(repo: str, token: str | None) -> tuple[dict | None, list[str]
     return data, []
 
 
+def _select_latest_release(releases: list[dict]) -> dict | None:
+    """Pick the most recently published non-draft release.
+
+    GitHub's list-releases endpoint does not document a sort order, so we must
+    not assume ``releases[0]`` is the newest (empirically it is not stable).
+    Prereleases are included because the dashboard surfaces alphas/betas; only
+    drafts are excluded. ``published_at``/``created_at`` are ISO 8601 UTC
+    strings, which sort lexicographically in chronological order, so we sort on
+    ``published_at`` (falling back to ``created_at`` when it is null) and break
+    exact ties with the release ``id`` (monotonically increasing) so the result
+    stays deterministic even when two releases share a timestamp.
+    """
+    candidates = [r for r in releases if isinstance(r, dict) and not r.get("draft")]
+    if not candidates:
+        return None
+    return max(
+        candidates,
+        key=lambda r: (r.get("published_at") or r.get("created_at") or "", r.get("id") or 0),
+    )
+
+
 def fetch_github_data(repo: str, token: str | None) -> dict:
     """Fetch latest release, last commit date, open issue count.
 
@@ -197,16 +218,25 @@ def fetch_github_data(repo: str, token: str | None) -> dict:
         except json.JSONDecodeError:
             pass
 
-    # Use /releases?per_page=1 instead of /releases/latest so prereleases
-    # are included. /releases/latest skips prereleases and drafts, which 404s
-    # for packs whose only releases so far are alphas/betas.
-    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/releases?per_page=1", token)
+    # Use /releases (not /releases/latest) so prereleases are included:
+    # /releases/latest skips prereleases and drafts and 404s for packs whose
+    # only releases so far are alphas/betas. GitHub does not document the sort
+    # order of /releases, so fetch a full page and select deterministically by
+    # published_at instead of trusting the list position (issue #20).
+    # per_page=100 comfortably covers every pack's release count.
+    status, body = _request_with_retry(f"{GITHUB_API}/repos/{repo}/releases?per_page=100", token)
     if status == 200:
         try:
             releases = json.loads(body)
-            if releases and isinstance(releases, list):
-                rel = releases[0]
-                if not rel.get("draft"):
+            if isinstance(releases, list):
+                if len(releases) == 100:
+                    print(
+                        f"WARN: {repo} returned a full page of 100 releases; "
+                        "'Last release' may be truncated (add pagination)",
+                        file=sys.stderr,
+                    )
+                rel = _select_latest_release(releases)
+                if rel is not None:
                     out["release_tag"] = rel.get("tag_name")
                     published = rel.get("published_at")
                     if published:
