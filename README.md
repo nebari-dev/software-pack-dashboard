@@ -6,7 +6,7 @@ _Last regenerated: 2026-07-17T10:06:59Z. Trigger a refresh via the `Refresh pack
 
 ## At a glance
 
-- 0 GA · 8 Beta · 5 Alpha · 5 Experimental · 0 Deprecated
+- 0 GA · 8 Beta · 5 Alpha · 2 Experimental · 0 Deprecated
 - 0 packs flagged
 
 ## Packs
@@ -17,13 +17,10 @@ _Last regenerated: 2026-07-17T10:06:59Z. Trigger a refresh via the `Refresh pack
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | Self-hosted LLM serving via llm-d. Includes per-model OIDC access control, API key management, and Envoy AI Gateway token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-llm-serving-0.1.2 (Jul 15) | Jul 16 | – | – |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application wired into Keycloak SSO, with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.14 (Jul 06) | Jul 16 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi environment management for teams: versioned, shareable Pixi environments with rollback, backed by Keycloak SSO and PostgreSQL. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.2 (Jul 07) | Jul 07 | – | – |
-| [Capability Pack](https://github.com/nebari-dev/python-capability-pack) | Deploy Python services from a pixi manifest with one CRD. The capability operator wires each service with routing, TLS, and Keycloak OIDC on a shared hostname. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | Cluster observability with the Grafana LGTM stack: Loki logs, Tempo traces, Mimir metrics, and Grafana dashboards. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.1.4 (Jun 19) | Jul 03 | – | – |
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | Apache Superset dashboards and SQL exploration with Keycloak OAuth and NebariApp routing. Also installs standalone on non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jul 03 | – | – |
 | [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | Scalable model serving with Ray Serve through the RayService CRD, with optional routing, TLS, and OIDC via the nebari-operator. | Beta | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | v0.3.1 (Jun 19) | Jul 03 | – | – |
 | [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | MLflow experiment tracking and model registry with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Jul 03 | – | – |
-| [Data Engineering Pack](https://github.com/nebari-dev/data-engineering-pack) | Airflow orchestration and Marquez lineage tracking with OpenLineage defaults, wired into Nebari routing, TLS, and Keycloak auth. Modular components with demo-to-production deployment profiles. | Experimental | [@ns-mkusper](https://github.com/ns-mkusper) | Full | Yes | v0.1.0-alpha.0 (Jun 18) | Jul 03 | – | – |
-| [External Auth Pack](https://github.com/nebari-dev/external-auth-pack) | Connects users' external accounts (GitHub and other providers) and delivers their credentials into Nebari-launched notebooks, IDEs, and apps. | Experimental | [@ns-mkusper](https://github.com/ns-mkusper) | Full | Yes | – | Jul 03 | – | – |
 | [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Hourly Longhorn snapshots and daily S3 backups for every volume on the cluster's default StorageClass. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jul 03 | – | – |
 | [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | Scheduled supply-chain provenance reports: discovers running images and Helm releases, resolves digests, verifies signatures, and checks SLSA/SBOM attestations. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.0 (Jul 15) | Jul 15 | – | – |
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | Extends Nebari's JupyterHub with a Pi coding-agent workflow: named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
