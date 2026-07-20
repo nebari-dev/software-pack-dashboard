@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-20T21:06:20Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-20T22:54:20Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -13,7 +13,7 @@ _Last regenerated: 2026-07-20T21:06:20Z. Trigger a refresh via the `Refresh pack
 
 | Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
-| [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | Multi-user JupyterHub with Nebari's data science images and jhub-apps for publishing notebooks, dashboards, and apps from the browser. | Beta | [@aktech](https://github.com/aktech) | Full | No | nebari-data-science-pack-0.1.0 (Jun 19) | Jul 10 | – | – |
+| [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | Multi-user JupyterHub with Nebari's data science images and jhub-apps for publishing notebooks, dashboards, and apps from the browser. | Beta | [@aktech](https://github.com/aktech) | Full | No | nebari-data-science-pack-0.1.1 (Jul 20) | Jul 20 | – | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | Self-hosted LLM serving via llm-d. Includes per-model OIDC access control, API key management, and Envoy AI Gateway token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-llm-serving-0.1.2 (Jul 15) | Jul 16 | – | – |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application wired into Keycloak SSO, with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.14 (Jul 06) | Jul 16 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi environment management for teams: versioned, shareable Pixi environments with rollback, backed by Keycloak SSO and PostgreSQL. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.2 (Jul 07) | Jul 07 | – | – |
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-20T21:06:20Z_
+_Generated: 2026-07-20T22:54:20Z_
