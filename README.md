@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-07-23T13:44:11Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-07-23T15:51:37Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -19,7 +19,7 @@ _Last regenerated: 2026-07-23T13:44:11Z. Trigger a refresh via the `Refresh pack
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi environment management for teams: versioned, shareable Pixi environments with rollback, backed by Keycloak SSO and PostgreSQL. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.2 (Jul 07) | Jul 07 | – | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | Cluster observability with the Grafana LGTM stack: Loki logs, Tempo traces, Mimir metrics, and Grafana dashboards. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.2.0 (Jul 22) | Jul 22 | – | – |
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | Apache Superset dashboards and SQL exploration with Keycloak OAuth and NebariApp routing. Also installs standalone on non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.3.1 (Apr 09) | Jul 03 | – | – |
-| [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | Scalable model serving with Ray Serve through the RayService CRD, with optional routing, TLS, and OIDC via the nebari-operator. | Beta | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | v0.3.1 (Jun 19) | Jul 22 | – | – |
+| [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | Scalable model serving with Ray Serve through the RayService CRD, with optional routing, TLS, and OIDC via the nebari-operator. | Beta | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | nebari-rayserve-pack-0.4.1 (Jul 23) | Jul 23 | – | – |
 | [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | MLflow experiment tracking and model registry with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Jul 03 | – | – |
 | [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Hourly Longhorn snapshots and daily S3 backups for every volume on the cluster's default StorageClass. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Jul 03 | – | – |
 | [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | Scheduled supply-chain provenance reports: discovers running images and Helm releases, resolves digests, verifies signatures, and checks SLSA/SBOM attestations. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.1 (Jul 21) | Jul 21 | – | – |
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-07-23T13:44:11Z_
+_Generated: 2026-07-23T15:51:37Z_
