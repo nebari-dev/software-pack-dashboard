@@ -1,5 +1,6 @@
 {
   "__default__": "https://software-pack-dashboard.pages.dev",
+  "data-science-pack": "https://data-science-pack.pages.dev",
   "llm-serving-pack": "https://llm-serving-pack.pages.dev",
   "provenance-collector-pack": "https://provenance-collector-pack.pages.dev",
   "nebari-frames": "https://nebari-frames.pages.dev",
