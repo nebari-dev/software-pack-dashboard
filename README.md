@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-08-04T12:56:25Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-08-04T15:22:14Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -15,7 +15,7 @@ _Last regenerated: 2026-08-04T12:56:25Z. Trigger a refresh via the `Refresh pack
 |---|---|---|---|---|---|---|---|---|---|
 | [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | Multi-user JupyterHub with Nebari's data science images and jhub-apps for publishing notebooks, dashboards, and apps from the browser. | Beta | [@aktech](https://github.com/aktech) | Full | No | nebari-data-science-pack-0.1.1 (Jul 20) | Aug 04 | – | – |
 | [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | Self-hosted LLM serving via llm-d. Includes per-model OIDC access control, API key management, and Envoy AI Gateway token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-llm-serving-0.1.2 (Jul 15) | Jul 30 | – | – |
-| [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application wired into Keycloak SSO, with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.14 (Jul 06) | Aug 01 | – | – |
+| [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | N/A | – | v0.0.14 (Jul 06) | Aug 01 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi environment management for teams: versioned, shareable Pixi environments with rollback, backed by Keycloak SSO and PostgreSQL. | Beta | [@aktech](https://github.com/aktech) | N/A | – | nebari-nebi-pack-0.1.2 (Jul 07) | Jul 07 | – | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | Cluster observability with the Grafana LGTM stack: Loki logs, Tempo traces, Mimir metrics, and Grafana dashboards. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.2.0 (Jul 22) | Jul 22 | – | – |
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | Apache Superset dashboards and SQL exploration with Keycloak OAuth and NebariApp routing. Also installs standalone on non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.4.0 (Jul 29) | Jul 28 | – | – |
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-08-04T12:56:25Z_
+_Generated: 2026-08-04T15:22:14Z_
