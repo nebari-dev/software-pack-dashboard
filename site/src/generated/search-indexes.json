@@ -2,6 +2,7 @@
   "/data-science-pack/pagefind/",
   "/llm-serving-pack/pagefind/",
   "/chat-pack/pagefind/",
+  "/nebi-pack/pagefind/",
   "/provenance-collector-pack/pagefind/",
   "/nebari-frames/pagefind/",
   "/apps-pack/pagefind/"
