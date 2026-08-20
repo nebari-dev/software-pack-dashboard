@@ -2,11 +2,11 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-08-20T16:27:49Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-08-20T16:56:05Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
-- 0 GA · 8 Beta · 5 Alpha · 2 Experimental · 0 Deprecated
+- 0 GA · 8 Beta · 4 Alpha · 2 Experimental · 0 Deprecated
 - 0 packs flagged
 
 ## Packs
@@ -21,7 +21,6 @@ _Last regenerated: 2026-08-20T16:27:49Z. Trigger a refresh via the `Refresh pack
 | [Superset Pack](https://github.com/nebari-dev/superset-pack) | Apache Superset dashboards and SQL exploration with Keycloak OAuth and NebariApp routing. Also installs standalone on non-Nebari clusters. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.4.0 (Jul 29) | Aug 20 | – | – |
 | [Rayserve Pack](https://github.com/nebari-dev/rayserve-pack) | Scalable model serving with Ray Serve through the RayService CRD, with optional routing, TLS, and OIDC via the nebari-operator. | Beta | [@oren-openteams](https://github.com/oren-openteams) | Full | Yes | nebari-rayserve-pack-0.4.1 (Jul 23) | Aug 20 | – | – |
 | [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | MLflow experiment tracking and model registry with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Aug 20 | – | – |
-| [Longhorn Backup Pack](https://github.com/nebari-dev/longhorn-backup-pack) | Hourly Longhorn snapshots and daily S3 backups for every volume on the cluster's default StorageClass. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.3.0 (Jun 18) | Aug 20 | – | – |
 | [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | Scheduled supply-chain provenance reports: discovers running images and Helm releases, resolves digests, verifies signatures, and checks SLSA/SBOM attestations. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.4 (Aug 19) | Aug 19 | – | – |
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | Extends Nebari's JupyterHub with a Pi coding-agent workflow: named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Jul 03 | – | – |
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.4 (Aug 18) | Aug 18 | – | – |
@@ -62,4 +61,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-08-20T16:27:49Z_
+_Generated: 2026-08-20T16:56:05Z_
