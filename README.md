@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-08-20T13:41:31Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-08-20T14:30:08Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-08-20T13:41:31Z_
+_Generated: 2026-08-20T14:30:08Z_
