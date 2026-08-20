@@ -3,7 +3,13 @@
   "/llm-serving-pack/pagefind/",
   "/chat-pack/pagefind/",
   "/nebi-pack/pagefind/",
+  "/lgtm-pack/pagefind/",
+  "/superset-pack/pagefind/",
+  "/rayserve-pack/pagefind/",
+  "/mlflow-pack/pagefind/",
+  "/longhorn-backup-pack/pagefind/",
   "/provenance-collector-pack/pagefind/",
+  "/langfuse-pack/pagefind/",
   "/nebari-frames/pagefind/",
   "/apps-pack/pagefind/"
 ]

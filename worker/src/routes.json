@@ -4,7 +4,13 @@
   "llm-serving-pack": "https://llm-serving-pack.pages.dev",
   "chat-pack": "https://chat-pack.pages.dev",
   "nebi-pack": "https://nebi-pack.pages.dev",
+  "lgtm-pack": "https://lgtm-pack.pages.dev",
+  "superset-pack": "https://superset-pack.pages.dev",
+  "rayserve-pack": "https://rayserve-pack.pages.dev",
+  "mlflow-pack": "https://mlflow-pack.pages.dev",
+  "longhorn-backup-pack": "https://longhorn-backup-pack.pages.dev",
   "provenance-collector-pack": "https://provenance-collector-pack.pages.dev",
+  "langfuse-pack": "https://langfuse-pack.pages.dev",
   "nebari-frames": "https://nebari-frames.pages.dev",
   "apps-pack": "https://apps-pack.pages.dev",
   "building-a-software-pack": "https://nebari-software-pack-template.pages.dev"
