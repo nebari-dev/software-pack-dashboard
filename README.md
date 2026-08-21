@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-08-21T21:18:04Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-08-21T22:17:50Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -14,7 +14,7 @@ _Last regenerated: 2026-08-21T21:18:04Z. Trigger a refresh via the `Refresh pack
 | Pack | Description | Level | Owner | NebariApp | Standalone | Last release | Last commit | Flags | Notes |
 |---|---|---|---|---|---|---|---|---|---|
 | [Data Science Pack](https://github.com/nebari-dev/data-science-pack) | Multi-user JupyterHub with Nebari's data science images and jhub-apps for publishing notebooks, dashboards, and apps from the browser. | Beta | [@aktech](https://github.com/aktech) | Full | No | nebari-data-science-pack-0.1.4 (Aug 17) | Aug 20 | – | – |
-| [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | Self-hosted LLM serving via llm-d. Includes per-model OIDC access control, API key management, and Envoy AI Gateway token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-llm-serving-0.1.4 (Aug 17) | Aug 18 | – | – |
+| [LLM Serving Pack](https://github.com/nebari-dev/llm-serving-pack) | Self-hosted LLM serving via llm-d. Includes per-model OIDC access control, API key management, and Envoy AI Gateway token counting and rate limiting. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-llm-serving-0.1.4 (Aug 17) | Aug 21 | – | – |
 | [Chat Pack](https://github.com/nebari-dev/chat-pack) | A drop-in chat application with a React frontend and a Ravnar/AG-UI backend. | Alpha | [@pmeier](https://github.com/pmeier) | Full | Yes | chart/v0.0.26 (Aug 18) | Aug 18 | – | – |
 | [Nebi Pack](https://github.com/nebari-dev/nebi-pack) | Nebi environment management for teams: versioned, shareable Pixi environments with rollback, backed by Keycloak SSO and PostgreSQL. | Beta | [@aktech](https://github.com/aktech) | Full | Yes | nebari-nebi-pack-0.1.2 (Jul 07) | Aug 20 | – | – |
 | [LGTM Pack](https://github.com/nebari-dev/lgtm-pack) | Cluster observability with the Grafana LGTM stack: Loki logs, Tempo traces, Mimir metrics, and Grafana dashboards. | Beta | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | nebari-lgtm-pack-0.2.0 (Jul 22) | Aug 20 | – | – |
@@ -61,4 +61,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-08-21T21:18:04Z_
+_Generated: 2026-08-21T22:17:50Z_
