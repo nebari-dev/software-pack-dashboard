@@ -8,6 +8,7 @@
   "/rayserve-pack/pagefind/",
   "/mlflow-pack/pagefind/",
   "/provenance-collector-pack/pagefind/",
+  "/pi-coding-agent-pack/pagefind/",
   "/langfuse-pack/pagefind/",
   "/nebari-frames/pagefind/",
   "/apps-pack/pagefind/"
