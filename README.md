@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-08-25T18:31:43Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-08-25T18:55:39Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -23,7 +23,7 @@ _Last regenerated: 2026-08-25T18:31:43Z. Trigger a refresh via the `Refresh pack
 | [MLflow Pack](https://github.com/nebari-dev/mlflow-pack) | MLflow experiment tracking and model registry with Keycloak authentication, a PostgreSQL backend, and automatic TLS. | Alpha | [@tylerpotts](https://github.com/tylerpotts) | N/A | – | v0.1.0-alpha.1 (Jun 18) | Aug 24 | – | – |
 | [Provenance Collector](https://github.com/nebari-dev/provenance-collector-pack) | Scheduled supply-chain provenance reports: discovers running images and Helm releases, resolves digests, verifies signatures, and checks SLSA/SBOM attestations. | Alpha | [@viniciusdc](https://github.com/viniciusdc) | Full | Yes | v0.1.4 (Aug 19) | Aug 24 | – | – |
 | [Pi Coding Agent Pack](https://github.com/nebari-dev/pi-coding-agent-pack) | Extends Nebari's JupyterHub with a Pi coding-agent workflow: named-server profiles, session sharing, and optional relay adapters. | Experimental | [@nenb](https://github.com/nenb) | N/A | – | – | Aug 25 | – | – |
-| [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.4 (Aug 18) | Aug 18 | – | – |
+| [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.4 (Aug 18) | Aug 25 | – | – |
 | [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Langfuse LLM observability: tracing, evals, prompt management, and metrics for debugging and improving LLM apps. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Aug 24 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
 | [Nebari Frames](https://github.com/nebari-dev/nebari-frames) | Nebari Frames is the registry and exchange for Frames: scoped, text-based artifacts that carry organizational context into AI conversations. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.7 (Aug 19) | Aug 21 | – | MCP/Claude requires manual realm config (enable DCR + default-scope audience mapper); see docs/conn… |
 | [Apps Pack](https://github.com/nebari-dev/apps-pack) | Launch, manage, and observe static web applications on a Nebari cluster. | Experimental | [@jbouder](https://github.com/jbouder) | Full | No | – | Aug 17 | – | – |
@@ -61,4 +61,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-08-25T18:31:43Z_
+_Generated: 2026-08-25T18:55:39Z_

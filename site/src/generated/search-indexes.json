@@ -9,6 +9,7 @@
   "/mlflow-pack/pagefind/",
   "/provenance-collector-pack/pagefind/",
   "/pi-coding-agent-pack/pagefind/",
+  "/skillsctl/pagefind/",
   "/langfuse-pack/pagefind/",
   "/nebari-frames/pagefind/",
   "/apps-pack/pagefind/"
