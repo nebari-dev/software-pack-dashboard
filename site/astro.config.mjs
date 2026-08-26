@@ -8,7 +8,14 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Nebari Software Packs',
-      plugins: [nebari()],
+      // The dashboard is the pack catalog itself; the header logo links to
+      // its own root and the GitHub icon opens this repository.
+      plugins: [
+        nebari({
+          logoHref: 'https://packs.nebari.dev/',
+          githubHref: 'https://github.com/nebari-dev/software-pack-dashboard',
+        }),
+      ],
       // Dashboard-specific styling (hero + pack catalog). Loads after the
       // @nebari/starlight theme CSS so it can build on the brand tokens.
       customCss: ['./src/styles/dashboard.css'],
