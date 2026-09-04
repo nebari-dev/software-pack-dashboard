@@ -8,7 +8,6 @@
   "superset-pack": "https://superset-pack.pages.dev",
   "rayserve-pack": "https://rayserve-pack.pages.dev",
   "mlflow-pack": "https://mlflow-pack.pages.dev",
-  "provenance-collector-pack": "https://provenance-collector-pack.pages.dev",
   "pi-coding-agent-pack": "https://pi-coding-agent-pack.pages.dev",
   "skillsctl": "https://skillsctl.pages.dev",
   "langfuse-pack": "https://langfuse-pack.pages.dev",

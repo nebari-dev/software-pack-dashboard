@@ -7,7 +7,6 @@
   "/superset-pack/pagefind/",
   "/rayserve-pack/pagefind/",
   "/mlflow-pack/pagefind/",
-  "/provenance-collector-pack/pagefind/",
   "/pi-coding-agent-pack/pagefind/",
   "/skillsctl/pagefind/",
   "/langfuse-pack/pagefind/",
