@@ -2,10 +2,11 @@
  * Layered on @nebari/starlight. Uses the theme's --nbr-* palette tokens and
  * Starlight's --sl-* variables so it stays on-brand and theme-aware. */
 
-/* Match the @nebari/starlight homepage layout: on a sidebar-less splash page
- * Starlight sets --sl-content-width to 67.5rem and centers the .sl-container,
- * so we don't cap .sl-markdown-content ourselves - it inherits that same width
- * and the header and body span exactly as they do on the Starlight home. */
+/* The generated dashboard is the only page with .pack-grid. Restore its
+ * full-width layout without widening documentation pages that share this CSS. */
+body:has(.pack-grid) {
+  --sl-content-width: 100%;
+}
 
 /* Hero intro reads as a lead paragraph, not body copy. */
 .sl-markdown-content > p:first-of-type {
@@ -42,7 +43,7 @@
 }
 
 .pack-card__name {
-  font-family: var(--nbr-font-heading, var(--sl-font));
+  font-family: var(--sl-font);
   font-weight: 600;
   font-size: var(--sl-text-lg);
   line-height: 1.2;
