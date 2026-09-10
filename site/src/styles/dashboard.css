@@ -42,7 +42,7 @@
 }
 
 .pack-card__name {
-  font-family: var(--nbr-font-heading, var(--sl-font));
+  font-family: var(--sl-font);
   font-weight: 600;
   font-size: var(--sl-text-lg);
   line-height: 1.2;
