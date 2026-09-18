@@ -12,5 +12,6 @@
   "/skillsctl/pagefind/",
   "/langfuse-pack/pagefind/",
   "/nebari-frames/pagefind/",
-  "/apps-pack/pagefind/"
+  "/apps-pack/pagefind/",
+  "/harbor-pack/pagefind/"
 ]
