@@ -17,3 +17,4 @@ packs:
   - repo: nebari-dev/langfuse-pack
   - repo: nebari-dev/nebari-frames
   - repo: nebari-dev/apps-pack
+  - repo: nebari-dev/harbor-pack
