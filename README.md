@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-09-21T11:45:58Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-09-21T17:41:50Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -27,7 +27,7 @@ _Last regenerated: 2026-09-21T11:45:58Z. Trigger a refresh via the `Refresh pack
 | [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Langfuse LLM observability: tracing, evals, prompt management, and metrics for debugging and improving LLM apps. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Sep 10 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
 | [Nebari Frames](https://github.com/nebari-dev/nebari-frames) | Nebari Frames is the registry and exchange for Frames: scoped, text-based artifacts that carry organizational context into AI conversations. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.7 (Aug 19) | Sep 10 | – | MCP/Claude requires manual realm config (enable DCR + default-scope audience mapper); see docs/conn… |
 | [Apps Pack](https://github.com/nebari-dev/apps-pack) | Launch, manage, and observe static web applications on a Nebari cluster. | Experimental | [@jbouder](https://github.com/jbouder) | Full | No | v0.1.0 (Aug 26) | Sep 10 | – | – |
-| [Harbor Pack](https://github.com/nebari-dev/harbor-pack) | A Nebari software pack that runs Harbor | Alpha | [@jbouder](https://github.com/jbouder) | Full | Yes | – | Sep 18 | – | – |
+| [Harbor Pack](https://github.com/nebari-dev/harbor-pack) | A Nebari software pack that runs Harbor | Alpha | [@jbouder](https://github.com/jbouder) | Full | Yes | – | Sep 21 | – | – |
 
 ## Column reference
 
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-09-21T11:45:58Z_
+_Generated: 2026-09-21T17:41:50Z_
