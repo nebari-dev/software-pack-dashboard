@@ -57,6 +57,11 @@
       "enum": ["none", "partial", "full", "na"],
       "default": "na"
     },
+    "target_pack_spec_version": {
+      "type": ["string", "null"],
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Version of the Nebari Pack Specification this pack targets, as Macro.Meso.Micro (EffVer). Ties maturity tracking to the contract version the pack was built against. See https://github.com/nebari-dev/nebari-operator/blob/main/docs/pack-specification.md"
+    },
     "scope": {
       "type": "object",
       "additionalProperties": false,
