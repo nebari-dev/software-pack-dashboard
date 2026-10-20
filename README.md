@@ -2,7 +2,7 @@
 
 # Nebari Software Packs
 
-_Last regenerated: 2026-10-19T22:45:26Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
+_Last regenerated: 2026-10-20T01:27:54Z. Trigger a refresh via the `Refresh pack dashboard` workflow._
 
 ## At a glance
 
@@ -26,7 +26,7 @@ _Last regenerated: 2026-10-19T22:45:26Z. Trigger a refresh via the `Refresh pack
 | [skillsctl](https://github.com/nebari-dev/skillsctl) | CLI and registry server for discovering, installing, and publishing Claude Code skills | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.2.4 (Aug 18) | Aug 26 | – | – |
 | [Langfuse Pack](https://github.com/nebari-dev/langfuse-pack) | Langfuse LLM observability: tracing, evals, prompt management, and metrics for debugging and improving LLM apps. | Alpha | [@dcmcand](https://github.com/dcmcand) | Full | Yes | nebari-langfuse-0.1.0 (Jun 11) | Oct 09 | – | App-native Keycloak SSO; set the Keycloak issuer and hostname in values. Bundled datastores use fro… |
 | [Nebari Frames](https://github.com/nebari-dev/nebari-frames) | Nebari Frames is the registry and exchange for Frames: scoped, text-based artifacts that carry organizational context into AI conversations. | Beta | [@dcmcand](https://github.com/dcmcand) | Full | Yes | v0.1.7 (Aug 19) | Sep 10 | – | MCP/Claude requires manual realm config (enable DCR + default-scope audience mapper); see docs/conn… |
-| [Apps Pack](https://github.com/nebari-dev/apps-pack) | Launch, manage, and observe static web applications on a Nebari cluster. | Alpha | [@jbouder](https://github.com/jbouder) | Full | No | nebari-apps-0.1.0 (Oct 19) | Oct 19 | – | access.groups/users are not enforced by the gateway in nebari-operator 0.1.0 - private apps are "an… |
+| [Apps Pack](https://github.com/nebari-dev/apps-pack) | Launch, manage, and observe static web applications on a Nebari cluster. | Alpha | [@jbouder](https://github.com/jbouder) | Full | No | nebari-apps-0.1.0 (Oct 19) | Oct 20 | – | access.groups/users are not enforced by the gateway in nebari-operator 0.1.0 - private apps are "an… |
 | [Harbor Pack](https://github.com/nebari-dev/harbor-pack) | A Nebari software pack that runs Harbor | Alpha | [@jbouder](https://github.com/jbouder) | Full | Yes | – | Oct 09 | – | – |
 
 ## Column reference
@@ -62,4 +62,4 @@ To add a pack to this dashboard:
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full walkthrough.
 
-_Generated: 2026-10-19T22:45:26Z_
+_Generated: 2026-10-20T01:27:54Z_
