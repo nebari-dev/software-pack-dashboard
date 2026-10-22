@@ -21,7 +21,7 @@
 # Required fields
 # ----------------------------------------------------------------------------
 
-# Must equal the GitHub repo name exactly (e.g. "nebari-data-science-pack").
+# Must equal the GitHub repo name exactly (e.g. "data-science-pack").
 # The dashboard uses this to cross-check that the file is in the right repo.
 name: my-pack-name
 
@@ -30,7 +30,7 @@ display_name: My Pack
 
 # Maturity level. Must be lowercase. Allowed values: experimental | alpha | beta | ga
 # Definitions, per-level promotion checklist, and dashboard flag reference:
-#   https://github.com/nebari-dev/nebari-software-pack-template/blob/main/docs/release-readiness-checklist.md
+#   https://github.com/nebari-dev/software-pack-template/blob/main/docs/release-readiness-checklist.md
 level: alpha
 
 # GitHub username of the accountable engineer. No "@" prefix.
@@ -68,6 +68,17 @@ product_owner: null
 # Allowed: full | partial | none | na    Default: na
 # Use "na" for packs that are not user-facing applications.
 nebariapp_integration: full
+
+# Which version of the Nebari Pack Specification this pack was built against,
+# as Macro.Meso.Micro (EffVer). The specification is the contract a pack has to
+# satisfy, and it lives with the operator that enforces it:
+#   https://github.com/nebari-dev/nebari-operator/blob/main/docs/pack-specification.md
+#
+# Recording it means a Macro release of the specification shows up as work this
+# pack owes, rather than as a surprise the next time someone upgrades the
+# platform. Leave it null if the pack has not been checked against a specific
+# version yet.
+target_pack_spec_version: "0.1.0"
 
 # Whether the pack installs without the Nebari operator.
 scope:
