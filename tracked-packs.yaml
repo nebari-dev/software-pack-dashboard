@@ -18,3 +18,4 @@ packs:
   - repo: nebari-dev/nebari-frames
   - repo: nebari-dev/apps-pack
   - repo: nebari-dev/harbor-pack
+  - repo: nebari-dev/mem0-pack
